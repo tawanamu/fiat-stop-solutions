@@ -1,17 +1,18 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Phone, MapPin } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
 
   const navigation = [
-    { name: "Home", href: "#home" },
-    { name: "Car Parts", href: "#parts" },
-    { name: "Workshop", href: "#workshop" },
-    { name: "Auto Electrical", href: "#electrical" },
-    { name: "Buy Accident Cars", href: "#buy-cars" },
-    { name: "Contact", href: "#contact" }
+    { name: "Home", href: "/" },
+    { name: "Car Parts", href: "/parts" },
+    { name: "Workshop & Electrical", href: "/workshop" },
+    { name: "Buy Accident Cars", href: "/buy-cars" },
+    { name: "Contact", href: "/#contact" }
   ];
 
   return (
@@ -20,19 +21,33 @@ const Header = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <h1 className="text-2xl font-bold text-primary">1stop Fiat Stop</h1>
+            <Link to="/" className="text-2xl font-bold text-primary hover:text-primary/80 transition-colors">
+              1stop Fiat Stop
+            </Link>
           </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-8">
             {navigation.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className="text-foreground hover:text-primary transition-colors duration-200 font-medium"
-              >
-                {item.name}
-              </a>
+              item.href.startsWith('#') ? (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  className="text-foreground hover:text-primary transition-colors duration-200 font-medium"
+                >
+                  {item.name}
+                </a>
+              ) : (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className={`text-foreground hover:text-primary transition-colors duration-200 font-medium ${
+                    location.pathname === item.href ? 'text-primary' : ''
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              )
             ))}
           </nav>
 
@@ -65,14 +80,27 @@ const Header = () => {
           <div className="md:hidden absolute top-16 left-0 right-0 bg-background border-b border-border shadow-lg">
             <nav className="px-4 py-4 space-y-4">
               {navigation.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className="block text-foreground hover:text-primary transition-colors duration-200 font-medium"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.name}
-                </a>
+                item.href.startsWith('#') ? (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    className="block text-foreground hover:text-primary transition-colors duration-200 font-medium"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.name}
+                  </a>
+                ) : (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    className={`block text-foreground hover:text-primary transition-colors duration-200 font-medium ${
+                      location.pathname === item.href ? 'text-primary' : ''
+                    }`}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                )
               ))}
               <div className="pt-4 border-t border-border space-y-2 text-sm text-muted-foreground">
                 <div className="flex items-center space-x-2">
