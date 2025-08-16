@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { useCart } from "@/contexts/CartContext";
+import { useToast } from "@/hooks/use-toast";
 import { 
   Search, 
   Filter, 
@@ -20,6 +23,24 @@ import Footer from "@/components/Footer";
 const CarParts = () => {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [searchTerm, setSearchTerm] = useState('');
+  const { addItem } = useCart();
+  const { toast } = useToast();
+
+  const handleAddToCart = (part: any) => {
+    addItem({
+      id: part.id,
+      name: part.name,
+      price: part.price,
+      originalPrice: part.originalPrice,
+      image: part.image,
+      condition: part.condition
+    });
+    
+    toast({
+      title: "Added to cart!",
+      description: `${part.name} has been added to your cart.`,
+    });
+  };
 
   const categories = [
     "Engine Parts", "Brake System", "Suspension", "Electrical", 
@@ -205,31 +226,35 @@ const CarParts = () => {
                 <Card key={part.id} className="group hover:shadow-automotive transition-all duration-300">
                   {viewMode === 'grid' ? (
                     <>
-                      <div className="relative overflow-hidden">
-                        <img 
-                          src={part.image} 
-                          alt={part.name}
-                          className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                        />
-                        <div className="absolute top-3 left-3 flex gap-2">
-                          <Badge variant={part.condition === 'New' ? 'default' : 'secondary'}>
-                            {part.condition}
-                          </Badge>
-                          {part.fastDelivery && (
-                            <Badge variant="outline" className="bg-background/80">
-                              <Truck className="h-3 w-3 mr-1" />
-                              Fast
+                      <Link to={`/parts/${part.id}`} className="block">
+                        <div className="relative overflow-hidden">
+                          <img 
+                            src={part.image} 
+                            alt={part.name}
+                            className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                          />
+                          <div className="absolute top-3 left-3 flex gap-2">
+                            <Badge variant={part.condition === 'New' ? 'default' : 'secondary'}>
+                              {part.condition}
                             </Badge>
+                            {part.fastDelivery && (
+                              <Badge variant="outline" className="bg-background/80">
+                                <Truck className="h-3 w-3 mr-1" />
+                                Fast
+                              </Badge>
+                            )}
+                          </div>
+                          {part.originalPrice && (
+                            <div className="absolute top-3 right-3">
+                              <Badge variant="destructive">SALE</Badge>
+                            </div>
                           )}
                         </div>
-                        {part.originalPrice && (
-                          <div className="absolute top-3 right-3">
-                            <Badge variant="destructive">SALE</Badge>
-                          </div>
-                        )}
-                      </div>
+                      </Link>
                       <CardContent className="p-4">
-                        <h3 className="font-semibold text-foreground mb-2 line-clamp-2">{part.name}</h3>
+                        <Link to={`/parts/${part.id}`}>
+                          <h3 className="font-semibold text-foreground mb-2 line-clamp-2 hover:text-primary transition-colors">{part.name}</h3>
+                        </Link>
                         <div className="flex items-center gap-2 mb-3">
                           <div className="flex items-center">
                             <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
@@ -248,7 +273,14 @@ const CarParts = () => {
                             {part.inStock ? 'In Stock' : 'Out of Stock'}
                           </Badge>
                         </div>
-                        <Button className="w-full" disabled={!part.inStock}>
+                        <Button 
+                          className="w-full" 
+                          disabled={!part.inStock}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handleAddToCart(part);
+                          }}
+                        >
                           <ShoppingCart className="h-4 w-4 mr-2" />
                           {part.inStock ? 'Add to Cart' : 'Notify When Available'}
                         </Button>
@@ -257,14 +289,18 @@ const CarParts = () => {
                   ) : (
                     <CardContent className="p-4">
                       <div className="flex gap-4">
-                        <img 
-                          src={part.image} 
-                          alt={part.name}
-                          className="w-24 h-24 object-cover rounded-md flex-shrink-0"
-                        />
+                        <Link to={`/parts/${part.id}`} className="flex-shrink-0">
+                          <img 
+                            src={part.image} 
+                            alt={part.name}
+                            className="w-24 h-24 object-cover rounded-md hover:opacity-80 transition-opacity"
+                          />
+                        </Link>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-start justify-between mb-2">
-                            <h3 className="font-semibold text-foreground">{part.name}</h3>
+                            <Link to={`/parts/${part.id}`}>
+                              <h3 className="font-semibold text-foreground hover:text-primary transition-colors">{part.name}</h3>
+                            </Link>
                             <div className="text-right">
                               <span className="text-lg font-bold text-foreground">{part.price}</span>
                               {part.originalPrice && (
@@ -286,7 +322,11 @@ const CarParts = () => {
                             <Badge variant={part.inStock ? 'default' : 'secondary'}>
                               {part.inStock ? 'In Stock' : 'Out of Stock'}
                             </Badge>
-                            <Button size="sm" disabled={!part.inStock}>
+                            <Button 
+                              size="sm" 
+                              disabled={!part.inStock}
+                              onClick={() => handleAddToCart(part)}
+                            >
                               <ShoppingCart className="h-4 w-4 mr-2" />
                               {part.inStock ? 'Add to Cart' : 'Notify'}
                             </Button>

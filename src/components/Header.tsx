@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Phone, MapPin } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { useCart } from "@/contexts/CartContext";
+import { Menu, X, Phone, MapPin, ShoppingCart } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const { getItemCount } = useCart();
+  const itemCount = getItemCount();
 
   const navigation = [
     { name: "Home", href: "/" },
@@ -51,7 +55,7 @@ const Header = () => {
             ))}
           </nav>
 
-          {/* Contact Info & Mobile Menu Button */}
+          {/* Contact Info & Cart & Mobile Menu Button */}
           <div className="flex items-center space-x-4">
             <div className="hidden lg:flex items-center space-x-4 text-sm text-muted-foreground">
               <div className="flex items-center space-x-1">
@@ -63,6 +67,21 @@ const Header = () => {
                 <span>Manchester, UK</span>
               </div>
             </div>
+            
+            {/* Cart Icon */}
+            <Link to="/cart">
+              <Button variant="ghost" size="icon" className="relative">
+                <ShoppingCart className="h-5 w-5" />
+                {itemCount > 0 && (
+                  <Badge 
+                    variant="destructive" 
+                    className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center text-xs p-0"
+                  >
+                    {itemCount}
+                  </Badge>
+                )}
+              </Button>
+            </Link>
             
             <Button
               variant="ghost"
