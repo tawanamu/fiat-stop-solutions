@@ -32,8 +32,8 @@ const PartDetails = () => {
   const part = {
     id: parseInt(id || "1"),
     name: "Fiat 500 Brake Pads Set",
-    price: "£45.99",
-    originalPrice: "£59.99",
+    price: "R45.99",
+    originalPrice: "R59.99",
     images: [
       "/api/placeholder/500/400",
       "/api/placeholder/500/400", 
@@ -163,7 +163,7 @@ const PartDetails = () => {
                   {part.originalPrice && (
                     <>
                       <span className="text-xl text-muted-foreground line-through">{part.originalPrice}</span>
-                      <Badge variant="destructive">Save £{(parseFloat(part.originalPrice.replace('£', '')) - parseFloat(part.price.replace('£', ''))).toFixed(2)}</Badge>
+                      <Badge variant="destructive">Save R{(parseFloat(part.originalPrice.replace('R', '')) - parseFloat(part.price.replace('R', ''))).toFixed(2)}</Badge>
                     </>
                   )}
                 </div>
@@ -218,7 +218,7 @@ const PartDetails = () => {
                   disabled={!part.inStock}
                 >
                   <ShoppingCart className="h-5 w-5 mr-2" />
-                  {part.inStock ? `Add to Cart - £${(parseFloat(part.price.replace('£', '')) * quantity).toFixed(2)}` : 'Out of Stock'}
+                  {part.inStock ? `Add to Cart - R${(parseFloat(part.price.replace('R', '')) * quantity).toFixed(2)}` : 'Out of Stock'}
                 </Button>
 
                 <Badge variant={part.inStock ? 'default' : 'secondary'} className="w-full justify-center py-2">

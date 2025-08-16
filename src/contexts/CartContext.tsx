@@ -34,7 +34,7 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 
 const calculateTotal = (items: CartItem[]): number => {
   return items.reduce((total, item) => {
-    const price = parseFloat(item.price.replace('£', ''));
+    const price = parseFloat(item.price.replace('R', ''));
     return total + (price * item.quantity);
   }, 0);
 };

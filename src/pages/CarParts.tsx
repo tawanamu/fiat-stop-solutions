@@ -51,8 +51,8 @@ const CarParts = () => {
     {
       id: 1,
       name: "Fiat 500 Brake Pads Set",
-      price: "£45.99",
-      originalPrice: "£59.99",
+      price: "R45.99",
+      originalPrice: "R59.99",
       image: "/api/placeholder/300/200",
       rating: 4.5,
       reviews: 23,
@@ -63,7 +63,7 @@ const CarParts = () => {
     {
       id: 2,
       name: "Punto Engine Oil Filter",
-      price: "£12.50",
+      price: "R12.50",
       image: "/api/placeholder/300/200",
       rating: 4.8,
       reviews: 45,
@@ -74,8 +74,8 @@ const CarParts = () => {
     {
       id: 3,
       name: "Fiat Ducato Headlight (Used)",
-      price: "£89.99",
-      originalPrice: "£180.00",
+      price: "R89.99",
+      originalPrice: "R180.00",
       image: "/api/placeholder/300/200",
       rating: 4.2,
       reviews: 12,
@@ -86,7 +86,7 @@ const CarParts = () => {
     {
       id: 4,
       name: "500X Suspension Strut",
-      price: "£125.00",
+      price: "R125.00",
       image: "/api/placeholder/300/200",
       rating: 4.6,
       reviews: 18,
@@ -97,7 +97,7 @@ const CarParts = () => {
     {
       id: 5,
       name: "Panda Door Handle Set",
-      price: "£35.99",
+      price: "R35.99",
       image: "/api/placeholder/300/200",
       rating: 4.3,
       reviews: 31,
@@ -108,8 +108,8 @@ const CarParts = () => {
     {
       id: 6,
       name: "Fiat Bravo Alternator",
-      price: "£195.00",
-      originalPrice: "£350.00",
+      price: "R195.00",
+      originalPrice: "R350.00",
       image: "/api/placeholder/300/200",
       rating: 4.7,
       reviews: 8,

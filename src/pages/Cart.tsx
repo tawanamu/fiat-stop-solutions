@@ -43,7 +43,7 @@ const Cart = () => {
   };
 
   const subtotal = state.total;
-  const shipping = subtotal > 50 ? 0 : 5.99;
+  const shipping = subtotal > 500 ? 0 : 59.99;
   const total = subtotal + shipping;
 
   if (state.items.length === 0) {
@@ -153,11 +153,11 @@ const Cart = () => {
                           
                           <div className="text-right">
                             <div className="text-lg font-bold text-foreground">
-                              £{(parseFloat(item.price.replace('£', '')) * item.quantity).toFixed(2)}
+                              R{(parseFloat(item.price.replace('R', '')) * item.quantity).toFixed(2)}
                             </div>
                             {item.originalPrice && (
                               <div className="text-sm text-muted-foreground line-through">
-                                £{(parseFloat(item.originalPrice.replace('£', '')) * item.quantity).toFixed(2)}
+                                R{(parseFloat(item.originalPrice.replace('R', '')) * item.quantity).toFixed(2)}
                               </div>
                             )}
                             <div className="text-sm text-muted-foreground">
@@ -178,23 +178,23 @@ const Cart = () => {
                 <CardContent className="p-6">
                   <h2 className="text-xl font-bold mb-4">Order Summary</h2>
                   
-                  <div className="space-y-3">
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Subtotal ({state.items.reduce((sum, item) => sum + item.quantity, 0)} items)</span>
-                      <span className="font-medium">£{subtotal.toFixed(2)}</span>
+                    <div className="space-y-3">
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Subtotal ({state.items.reduce((sum, item) => sum + item.quantity, 0)} items)</span>
+                        <span className="font-medium">R{subtotal.toFixed(2)}</span>
                     </div>
                     
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Shipping</span>
-                      <span className="font-medium">
-                        {shipping === 0 ? 'Free' : `£${shipping.toFixed(2)}`}
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Shipping</span>
+                        <span className="font-medium">
+                          {shipping === 0 ? 'Free' : `R${shipping.toFixed(2)}`}
                       </span>
                     </div>
                     
-                    {shipping === 0 && (
-                      <div className="text-sm text-green-600 flex items-center gap-1">
-                        <Truck className="h-4 w-4" />
-                        Free shipping on orders over £50
+                      {shipping === 0 && (
+                        <div className="text-sm text-green-600 flex items-center gap-1">
+                          <Truck className="h-4 w-4" />
+                          Free shipping on orders over R500
                       </div>
                     )}
                     
@@ -202,7 +202,7 @@ const Cart = () => {
                     
                     <div className="flex justify-between text-lg font-bold">
                       <span>Total</span>
-                      <span>£{total.toFixed(2)}</span>
+                      <span>R{total.toFixed(2)}</span>
                     </div>
                   </div>
                   
@@ -238,7 +238,7 @@ const Cart = () => {
                   <div className="space-y-3 text-sm">
                     <div className="flex items-center gap-3">
                       <Truck className="h-4 w-4 text-primary" />
-                      <span>Free shipping on orders over £50</span>
+                      <span>Free shipping on orders over R500</span>
                     </div>
                     <div className="flex items-center gap-3">
                       <Shield className="h-4 w-4 text-primary" />

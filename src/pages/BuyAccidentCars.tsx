@@ -64,7 +64,7 @@ const BuyAccidentCars = () => {
       name: "Sarah Johnson",
       location: "Manchester",
       rating: 5,
-      comment: "Excellent service! They collected my crashed Fiat 500 within 2 days and paid me £2,500. Much more than I expected!"
+      comment: "Excellent service! They collected my crashed Fiat 500 within 2 days and paid me R2,500. Much more than I expected!"
     },
     {
       name: "Mike Thompson", 
@@ -76,7 +76,7 @@ const BuyAccidentCars = () => {
       name: "Emma Wilson",
       location: "Leeds",
       rating: 5,
-      comment: "My Punto had engine problems and wouldn't start. They still gave me £800 and collected it for free."
+      comment: "My Punto had engine problems and wouldn't start. They still gave me R800 and collected it for free."
     }
   ];
 
