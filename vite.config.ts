@@ -5,9 +5,10 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  base: "/fiat-stop-solutions/", // <-- moved here and ensure trailing slash
   server: {
     host: "::",
-    port: 8080,
+    port: 8080
   },
   plugins: [
     react(),
