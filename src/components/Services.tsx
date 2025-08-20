@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import { 
   ShoppingBag, 
   Wrench, 
@@ -22,7 +23,8 @@ const Services = () => {
       description: "Extensive inventory of new and used Fiat parts. Quality guaranteed with competitive pricing.",
       image: carPartsImage,
       features: ["New & Used Parts", "Quality Guarantee", "Competitive Prices", "Fast Delivery"],
-      cta: "Browse Parts"
+      cta: "Browse Parts",
+      href: "/parts"
     },
     {
       icon: Wrench,
@@ -30,7 +32,8 @@ const Services = () => {
       description: "Expert mechanical repairs and servicing by certified technicians for all Fiat models.",
       image: "/api/placeholder/400/300",
       features: ["Certified Technicians", "All Fiat Models", "Service & Repairs", "MOT Testing"],
-      cta: "Book Service"
+      cta: "Book Service",
+      href: "/workshop"
     },
     {
       icon: Zap,
@@ -38,7 +41,8 @@ const Services = () => {
       description: "Specialized electrical diagnostics and repairs using the latest automotive technology.",
       image: electricalImage,
       features: ["Electrical Diagnostics", "ECU Programming", "Wiring Repairs", "Battery Testing"],
-      cta: "Get Diagnosis"
+      cta: "Get Diagnosis",
+      href: "/workshop"
     },
     {
       icon: Car,
@@ -46,7 +50,8 @@ const Services = () => {
       description: "We purchase accident-damaged vehicles and non-runners. Quick valuation and fair prices.",
       image: accidentCarsImage,
       features: ["Quick Valuation", "Fair Prices", "Free Collection", "Instant Payment"],
-      cta: "Get Quote"
+      cta: "Get Quote",
+      href: "/buy-car"
     }
   ];
 
@@ -101,9 +106,11 @@ const Services = () => {
                   ))}
                 </div>
                 
-                <Button className="w-full group-hover:bg-primary/90 transition-colors">
-                  {service.cta} <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
+                <Link to={service.href} className="block">
+                  <Button className="w-full group-hover:bg-primary/90 transition-colors">
+                    {service.cta} <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
               </CardContent>
             </Card>
           ))}

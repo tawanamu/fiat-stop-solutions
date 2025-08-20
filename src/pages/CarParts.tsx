@@ -8,9 +8,7 @@ import { useCart } from "@/contexts/CartContext";
 import { useToast } from "@/hooks/use-toast";
 import { 
   Search, 
-  Filter, 
   ShoppingCart, 
-  Star,
   Truck,
   Shield,
   Clock,
@@ -42,43 +40,32 @@ const CarParts = () => {
     });
   };
 
-  const categories = [
-    "Engine Parts", "Brake System", "Suspension", "Electrical", 
-    "Body Parts", "Interior", "Filters", "Oils & Fluids"
-  ];
-
   const featuredParts = [
     {
       id: 1,
-      name: "Fiat 500 Brake Pads Set",
-      price: "R45.99",
-      originalPrice: "R59.99",
-      image: "/api/placeholder/300/200",
-      rating: 4.5,
-      reviews: 23,
-      condition: "New",
+      name: "Linear Starter - Fiat Punto",
+      price: "R200.00",
+      originalPice: "R250.00",
+      image: "/parts/linear-starter.jpg",
+      condition: "Used",
       inStock: true,
       fastDelivery: true
     },
     {
       id: 2,
-      name: "Punto Engine Oil Filter",
-      price: "R12.50",
-      image: "/api/placeholder/300/200",
-      rating: 4.8,
-      reviews: 45,
-      condition: "New",
+      name: "Regulator",
+      price: "R250",
+      image: "/parts/regulator.jpg",
+      condition: "Used",
       inStock: true,
       fastDelivery: true
     },
     {
       id: 3,
-      name: "Fiat Ducato Headlight (Used)",
-      price: "R89.99",
-      originalPrice: "R180.00",
-      image: "/api/placeholder/300/200",
-      rating: 4.2,
-      reviews: 12,
+      name: "Fiat Punto Engine (310A6)",
+      price: "R8000.00",
+      originalPrice: "R10000.00",
+      image: "/parts/fiat-punto-engine.jpg",
       condition: "Used",
       inStock: true,
       fastDelivery: false
@@ -88,8 +75,6 @@ const CarParts = () => {
       name: "500X Suspension Strut",
       price: "R125.00",
       image: "/api/placeholder/300/200",
-      rating: 4.6,
-      reviews: 18,
       condition: "New",
       inStock: true,
       fastDelivery: true
@@ -99,8 +84,6 @@ const CarParts = () => {
       name: "Panda Door Handle Set",
       price: "R35.99",
       image: "/api/placeholder/300/200",
-      rating: 4.3,
-      reviews: 31,
       condition: "New",
       inStock: false,
       fastDelivery: false
@@ -111,8 +94,6 @@ const CarParts = () => {
       price: "R195.00",
       originalPrice: "R350.00",
       image: "/api/placeholder/300/200",
-      rating: 4.7,
-      reviews: 8,
       condition: "Refurbished",
       inStock: true,
       fastDelivery: true
@@ -135,66 +116,42 @@ const CarParts = () => {
                 Extensive inventory of genuine, OEM, and quality aftermarket parts for all Fiat models. 
                 New, used, and refurbished parts with guaranteed quality.
               </p>
-              
-              {/* Search Bar */}
-              <div className="max-w-2xl mx-auto relative">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                <Input
-                  type="text"
-                  placeholder="Search for parts by name, part number, or Fiat model..."
-                  className="pl-12 pr-24 h-14 text-lg"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                <Button className="absolute right-2 top-2 h-10" size="sm">
-                  Search
-                </Button>
-              </div>
+              {/* top search removed */}
             </div>
 
-            {/* Quick Stats */}
-            <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-              <div className="text-center">
-                <div className="bg-primary/10 rounded-full p-4 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-                  <Truck className="h-8 w-8 text-primary" />
-                </div>
-                <h3 className="font-semibold text-foreground mb-2">Fast Delivery</h3>
-                <p className="text-muted-foreground text-sm">Next day delivery on most parts</p>
-              </div>
-              <div className="text-center">
-                <div className="bg-primary/10 rounded-full p-4 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-                  <Shield className="h-8 w-8 text-primary" />
-                </div>
-                <h3 className="font-semibold text-foreground mb-2">Quality Guarantee</h3>
-                <p className="text-muted-foreground text-sm">12-month warranty on all parts</p>
-              </div>
-              <div className="text-center">
-                <div className="bg-primary/10 rounded-full p-4 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-                  <Clock className="h-8 w-8 text-primary" />
-                </div>
-                <h3 className="font-semibold text-foreground mb-2">Expert Support</h3>
-                <p className="text-muted-foreground text-sm">Specialist advice available</p>
-              </div>
-            </div>
+            {/* Quick Stats removed */}
           </div>
         </section>
 
-        {/* Categories & Filters */}
+        {/* View Mode & Filters (search moved here where categories were) */}
         <section className="py-8 border-b border-border">
           <div className="container mx-auto px-4">
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-              {/* Categories */}
-              <div className="flex flex-wrap gap-2">
-                <Button variant="default" size="sm">All Categories</Button>
-                {categories.map((category) => (
-                  <Button key={category} variant="outline" size="sm">
-                    {category}
+              {/* Search moved here where categories were */}
+              <div className="w-full lg:w-1/2">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    type="text"
+                    placeholder="Search parts, part numbers or models..."
+                    className="pl-10 pr-28 h-12"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+                  <Button
+                    className="absolute right-1 top-1 h-10"
+                    size="sm"
+                    onClick={() => {
+                      /* optional: trigger any search action, currently input updates state */
+                    }}
+                  >
+                    Search
                   </Button>
-                ))}
+                </div>
               </div>
               
-              {/* View Mode & Filter */}
-              <div className="flex items-center gap-2">
+              {/* View Mode */}
+              <div className="flex items-center gap-2 ml-auto">
                 <Button
                   variant={viewMode === 'grid' ? 'default' : 'outline'}
                   size="icon"
@@ -208,10 +165,6 @@ const CarParts = () => {
                   onClick={() => setViewMode('list')}
                 >
                   <List className="h-4 w-4" />
-                </Button>
-                <Button variant="outline" size="sm">
-                  <Filter className="h-4 w-4 mr-2" />
-                  Filter
                 </Button>
               </div>
             </div>
@@ -255,13 +208,9 @@ const CarParts = () => {
                         <Link to={`/parts/${part.id}`}>
                           <h3 className="font-semibold text-foreground mb-2 line-clamp-2 hover:text-primary transition-colors">{part.name}</h3>
                         </Link>
-                        <div className="flex items-center gap-2 mb-3">
-                          <div className="flex items-center">
-                            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                            <span className="text-sm text-muted-foreground ml-1">{part.rating}</span>
-                          </div>
-                          <span className="text-sm text-muted-foreground">({part.reviews} reviews)</span>
-                        </div>
+
+                        {/* rating removed */}
+
                         <div className="flex items-center justify-between mb-4">
                           <div>
                             <span className="text-xl font-bold text-foreground">{part.price}</span>
@@ -309,11 +258,6 @@ const CarParts = () => {
                             </div>
                           </div>
                           <div className="flex items-center gap-2 mb-2">
-                            <div className="flex items-center">
-                              <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                              <span className="text-sm text-muted-foreground ml-1">{part.rating}</span>
-                            </div>
-                            <span className="text-sm text-muted-foreground">({part.reviews} reviews)</span>
                             <Badge variant={part.condition === 'New' ? 'default' : 'secondary'} className="text-xs">
                               {part.condition}
                             </Badge>

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -21,6 +21,7 @@ import Footer from "@/components/Footer";
 const Cart = () => {
   const { state, updateQuantity, removeItem, clearCart } = useCart();
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleQuantityChange = (id: number, newQuantity: number) => {
     updateQuantity(id, newQuantity);
@@ -206,7 +207,7 @@ const Cart = () => {
                     </div>
                   </div>
                   
-                  <Button className="w-full mt-6" size="lg">
+                  <Button className="w-full mt-6" size="lg" onClick={() => navigate("/checkout")}>
                     <Lock className="h-4 w-4 mr-2" />
                     Proceed to Checkout
                   </Button>

@@ -24,43 +24,31 @@ const WorkshopServices = () => {
     {
       name: "Full Service & MOT",
       description: "Comprehensive vehicle service including MOT testing",
-      price: "From £149",
-      duration: "3-4 hours",
       popular: true
     },
     {
       name: "Brake System Repair",
       description: "Brake pads, discs, fluid replacement and brake system diagnostics",
-      price: "From £89",
-      duration: "2-3 hours",
       popular: false
     },
     {
       name: "Engine Diagnostics",
       description: "Professional diagnostic testing to identify engine issues",
-      price: "From £59",
-      duration: "1 hour",
       popular: false
     },
     {
       name: "Clutch Replacement",
       description: "Expert clutch repair and replacement for all Fiat models",
-      price: "From £399",
-      duration: "4-6 hours",
       popular: false
     },
     {
       name: "Suspension Repair",
       description: "Struts, springs, and suspension component replacement",
-      price: "From £199",
-      duration: "2-4 hours",
       popular: false
     },
     {
       name: "Timing Belt Service",
       description: "Timing belt replacement with water pump service",
-      price: "From £299",
-      duration: "4-5 hours",
       popular: true
     }
   ];
@@ -69,43 +57,31 @@ const WorkshopServices = () => {
     {
       name: "ECU Diagnostics & Programming",
       description: "Advanced ECU fault diagnosis and software programming",
-      price: "From £79",
-      duration: "1-2 hours",
       popular: true
     },
     {
       name: "Battery Testing & Replacement",
       description: "Professional battery testing and genuine battery replacement",
-      price: "From £89",
-      duration: "30 minutes",
       popular: false
     },
     {
       name: "Alternator & Starter Motor",
       description: "Repair and replacement of charging and starting systems",
-      price: "From £159",
-      duration: "2-3 hours",
       popular: false
     },
     {
       name: "Wiring Loom Repair",
       description: "Professional automotive wiring repairs and modifications",
-      price: "From £69",
-      duration: "1-3 hours",
       popular: false
     },
     {
       name: "Air Conditioning Service",
       description: "A/C system diagnostics, repair and re-gas service",
-      price: "From £99",
-      duration: "2 hours",
       popular: true
     },
     {
       name: "Dashboard Warning Lights",
       description: "Diagnose and resolve all dashboard warning light issues",
-      price: "From £49",
-      duration: "1 hour",
       popular: false
     }
   ];
@@ -205,7 +181,7 @@ const WorkshopServices = () => {
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {mechanicalServices.map((service, index) => (
+              {mechanicalServices.map((service) => (
                 <Card key={service.name} className="relative group hover:shadow-automotive transition-all duration-300">
                   {service.popular && (
                     <div className="absolute -top-3 left-4 z-10">
@@ -213,12 +189,8 @@ const WorkshopServices = () => {
                     </div>
                   )}
                   <CardContent className="p-6">
-                    <div className="flex items-start justify-between mb-4">
+                    <div className="mb-4">
                       <h3 className="font-semibold text-foreground text-lg leading-tight">{service.name}</h3>
-                      <div className="text-right">
-                        <div className="text-lg font-bold text-primary">{service.price}</div>
-                        <div className="text-sm text-muted-foreground">{service.duration}</div>
-                      </div>
                     </div>
                     <p className="text-muted-foreground mb-6">{service.description}</p>
                     <Button className="w-full group-hover:bg-primary/90 transition-colors">
@@ -250,7 +222,7 @@ const WorkshopServices = () => {
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {electricalServices.map((service, index) => (
+              {electricalServices.map((service) => (
                 <Card key={service.name} className="relative group hover:shadow-automotive transition-all duration-300">
                   {service.popular && (
                     <div className="absolute -top-3 left-4 z-10">
@@ -258,12 +230,8 @@ const WorkshopServices = () => {
                     </div>
                   )}
                   <CardContent className="p-6">
-                    <div className="flex items-start justify-between mb-4">
+                    <div className="mb-4">
                       <h3 className="font-semibold text-foreground text-lg leading-tight">{service.name}</h3>
-                      <div className="text-right">
-                        <div className="text-lg font-bold text-primary">{service.price}</div>
-                        <div className="text-sm text-muted-foreground">{service.duration}</div>
-                      </div>
                     </div>
                     <p className="text-muted-foreground mb-6">{service.description}</p>
                     <Button className="w-full group-hover:bg-primary/90 transition-colors">
