@@ -66,7 +66,9 @@ const ContactForm = () => {
                   </div>
                   <div>
                     <h4 className="font-semibold text-foreground">Phone</h4>
-                    <p className="text-muted-foreground">0123 456 789</p>
+                    <p className="text-muted-foreground">
+                      <a href="tel:+27820688246" className="hover:text-foreground">+27 82 068 8246</a>
+                    </p>
                     <p className="text-sm text-muted-foreground">Available 9 AM - 6 PM</p>
                   </div>
                 </div>
@@ -77,8 +79,10 @@ const ContactForm = () => {
                   </div>
                   <div>
                     <h4 className="font-semibold text-foreground">Email</h4>
-                    <p className="text-muted-foreground">info@1stopfiatstop.co.uk</p>
-                    <p className="text-sm text-muted-foreground">We respond within 2 hours</p>
+                    <p className="text-muted-foreground">
+                      <a href="mailto:1stopshop@gmail.com" className="hover:text-foreground">1stopshop@gmail.com</a>
+                    </p>
+                    <p className="text-sm text-muted-foreground">We respond within 24 hours</p>
                   </div>
                 </div>
                 
@@ -89,9 +93,19 @@ const ContactForm = () => {
                   <div>
                     <h4 className="font-semibold text-foreground">Address</h4>
                     <p className="text-muted-foreground">
-                      123 Industrial Estate<br />
-                      Manchester, M12 3AB<br />
-                      United Kingdom
+                      119 Houghton Rd<br />
+                      Clairwood, Durban, 4052<br />
+                      South Africa
+                    </p>
+                    <p className="text-sm">
+                      <a
+                        href="https://www.google.com/maps/search/119+Houghton+Rd+Clairwood+Durban+4052"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-sm text-muted-foreground hover:text-foreground"
+                      >
+                        View on map
+                      </a>
                     </p>
                   </div>
                 </div>
