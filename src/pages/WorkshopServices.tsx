@@ -1,6 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Link } from "react-router-dom";
 import { 
   Wrench, 
   Zap, 
@@ -121,10 +122,12 @@ const WorkshopServices = () => {
                 Expert technicians using the latest diagnostic equipment and genuine parts.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="text-lg px-8">
-                  <Calendar className="h-5 w-5 mr-2" />
-                  Book Service
-                </Button>
+                <Link to="/book-service">
+                  <Button size="lg" className="text-lg px-8">
+                    <Calendar className="h-5 w-5 mr-2" />
+                    Book Service
+                  </Button>
+                </Link>
                 <Button variant="outline" size="lg" className="text-lg px-8 bg-white/10 border-white text-white hover:bg-white hover:text-automotive-gray">
                   <Phone className="h-5 w-5 mr-2" />
                   Call: +27 82 068 8246
@@ -193,10 +196,12 @@ const WorkshopServices = () => {
                       <h3 className="font-semibold text-foreground text-lg leading-tight">{service.name}</h3>
                     </div>
                     <p className="text-muted-foreground mb-6">{service.description}</p>
-                    <Button className="w-full group-hover:bg-primary/90 transition-colors">
-                      <Settings className="h-4 w-4 mr-2" />
-                      Book Service
-                    </Button>
+                    <Link to="/book-service">
+                      <Button className="w-full group-hover:bg-primary/90 transition-colors">
+                        <Settings className="h-4 w-4 mr-2" />
+                        Book Service
+                      </Button>
+                    </Link>
                   </CardContent>
                 </Card>
               ))}
@@ -234,10 +239,12 @@ const WorkshopServices = () => {
                       <h3 className="font-semibold text-foreground text-lg leading-tight">{service.name}</h3>
                     </div>
                     <p className="text-muted-foreground mb-6">{service.description}</p>
-                    <Button className="w-full group-hover:bg-primary/90 transition-colors">
-                      <Zap className="h-4 w-4 mr-2" />
-                      Book Service
-                    </Button>
+                    <Link to="/book-service">
+                      <Button className="w-full group-hover:bg-primary/90 transition-colors">
+                        <Zap className="h-4 w-4 mr-2" />
+                        Book Service
+                      </Button>
+                    </Link>
                   </CardContent>
                 </Card>
               ))}
@@ -317,10 +324,12 @@ const WorkshopServices = () => {
               Book your appointment today or call for urgent repairs.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="text-lg px-8">
-                <Calendar className="h-5 w-5 mr-2" />
-                Book Online
-              </Button>
+              <Link to="/book-service">
+                <Button size="lg" className="text-lg px-8">
+                  <Calendar className="h-5 w-5 mr-2" />
+                  Book Online
+                </Button>
+              </Link>
               <Button variant="outline" size="lg" className="text-lg px-8">
                 <Phone className="h-5 w-5 mr-2" />
                 Call: +27 82 068 8246

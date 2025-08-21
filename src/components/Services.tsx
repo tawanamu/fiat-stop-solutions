@@ -33,7 +33,7 @@ const Services = () => {
       image: "/api/placeholder/400/300",
       features: ["Certified Technicians", "All Fiat Models", "Service & Repairs", "MOT Testing"],
       cta: "Book Service",
-      href: "/workshop"
+      href: "/book-service"
     },
     {
       icon: Zap,

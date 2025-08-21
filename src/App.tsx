@@ -10,6 +10,7 @@ import PartDetails from "./pages/PartDetails";
 import Cart from "./pages/Cart";
 import BuyAccidentCars from "./pages/BuyAccidentCars";
 import WorkshopServices from "./pages/WorkshopServices";
+import BookService from "./pages/BookService";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "@/components/ScrollToTop"; // added import
 import Checkout from "./pages/Checkout";
@@ -32,6 +33,7 @@ const App = () => (
             <Route path="/checkout" element={<Checkout />} /> {/* new checkout route */}
             <Route path="/buy-cars" element={<BuyAccidentCars />} />
             <Route path="/workshop" element={<WorkshopServices />} />
+            <Route path="/book-service" element={<BookService />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Router>

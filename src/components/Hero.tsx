@@ -35,7 +35,7 @@ const Hero = () => {
               </Button>
             </Link>
 
-            <Link to="/workshop" className="inline-block">
+            <Link to="/book-service" className="inline-block">
               <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-automotive-gray">
                 Book Service
               </Button>
