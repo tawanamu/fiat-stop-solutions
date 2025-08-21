@@ -102,7 +102,7 @@ const BuyAccidentCars = () => {
                 </Button>
                 <Button variant="outline" size="lg" className="text-lg px-8">
                   <Phone className="h-5 w-5 mr-2" />
-                  Call: 0123 456 789
+                  Call: +27 82 068 8246
                 </Button>
               </div>
             </div>
@@ -330,17 +330,19 @@ const BuyAccidentCars = () => {
               </Button>
               <Button variant="outline" size="lg" className="text-lg px-8">
                 <Phone className="h-5 w-5 mr-2" />
-                Call Now: 0123 456 789
+                Call Now: +27 82 068 8246
               </Button>
             </div>
             <div className="flex flex-col sm:flex-row gap-6 justify-center text-sm text-muted-foreground">
               <div className="flex items-center justify-center">
                 <Mail className="h-4 w-4 mr-2" />
-                info@1stopfiatstop.co.uk
+                1stopshop@gmail.com
               </div>
               <div className="flex items-center justify-center">
                 <MapPin className="h-4 w-4 mr-2" />
-                Manchester, UK
+                119 Houghton Rd
+                Clairwood, Durban, 4052
+                South Africa
               </div>
             </div>
           </div>

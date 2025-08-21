@@ -75,11 +75,12 @@ const Header = () => {
               <div className="hidden lg:flex items-center space-x-4 text-sm text-muted-foreground">
                 <div className="flex items-center space-x-1">
                   <Phone className="h-4 w-4" />
-                  <span>0123 456 789</span>
+                  <span>+27 82 068 8246</span>
                 </div>
                 <div className="flex items-center space-x-1">
                   <MapPin className="h-4 w-4" />
-                  <span>Manchester, UK</span>
+                  <span>119 Houghton Rd
+                  Clairwood, Durban</span>
                 </div>
               </div>
               

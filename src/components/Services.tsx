@@ -51,7 +51,7 @@ const Services = () => {
       image: accidentCarsImage,
       features: ["Quick Valuation", "Fair Prices", "Free Collection", "Instant Payment"],
       cta: "Get Quote",
-      href: "/buy-car"
+      href: "/buy-cars"
     }
   ];
 

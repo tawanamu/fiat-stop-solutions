@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Wrench, Zap, ShoppingBag, Car } from "lucide-react";
+import { Link } from "react-router-dom";
 import workshopImage from "@/assets/workshop-hero.jpg";
 
 const Hero = () => {
@@ -24,16 +25,21 @@ const Hero = () => {
           </h1>
           <p className="text-xl text-gray-200 mb-8 leading-relaxed">
             From quality car parts to expert repairs and accident car purchases - 
-            we're your trusted automotive partner in Manchester.
+            we're your trusted automotive partner in South Africa.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 mb-12">
-            <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-automotive">
-              Browse Car Parts <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
-            <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-automotive-gray">
-              Book Service
-            </Button>
+            <Link to="/parts" className="inline-block">
+              <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-automotive">
+                Browse Car Parts <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
+
+            <Link to="/workshop" className="inline-block">
+              <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-automotive-gray">
+                Book Service
+              </Button>
+            </Link>
           </div>
 
           {/* Quick Stats */}

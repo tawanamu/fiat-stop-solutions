@@ -127,7 +127,7 @@ const WorkshopServices = () => {
                 </Button>
                 <Button variant="outline" size="lg" className="text-lg px-8 bg-white/10 border-white text-white hover:bg-white hover:text-automotive-gray">
                   <Phone className="h-5 w-5 mr-2" />
-                  Call: 0123 456 789
+                  Call: +27 82 068 8246
                 </Button>
               </div>
             </div>
@@ -323,7 +323,7 @@ const WorkshopServices = () => {
               </Button>
               <Button variant="outline" size="lg" className="text-lg px-8">
                 <Phone className="h-5 w-5 mr-2" />
-                Call: 0123 456 789
+                Call: +27 82 068 8246
               </Button>
             </div>
             <p className="text-sm text-muted-foreground mt-6">
