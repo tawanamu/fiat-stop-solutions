@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -341,14 +342,14 @@ const BookService = () => {
                                 {date ? format(date, "PPP") : <span>Pick a date</span>}
                               </Button>
                             </PopoverTrigger>
-                            <PopoverContent className="w-auto p-0" align="start">
+                            <PopoverContent className="w-auto p-0 z-50" align="center" side="bottom">
                               <Calendar
                                 mode="single"
                                 selected={date}
                                 onSelect={setDate}
                                 disabled={(date) => date < new Date() || date.getDay() === 0}
                                 initialFocus
-                                className={cn("p-3 pointer-events-auto")}
+                                className="p-3 pointer-events-auto"
                               />
                             </PopoverContent>
                           </Popover>
