@@ -386,7 +386,6 @@ const BookService = () => {
 
                     <div className="pt-6 border-t">
                       <Button type="submit" size="lg" className="w-full">
-                        <Calendar className="mr-2 h-5 w-5" />
                         Book Service Appointment
                       </Button>
                       <p className="text-sm text-muted-foreground text-center mt-3">
