@@ -165,10 +165,10 @@ const SecondHandCars = () => {
     const matchesSearch = car.make.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          car.model.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          car.color.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesMake = !selectedMake || car.make === selectedMake;
-    const matchesCondition = !selectedCondition || car.condition === selectedCondition;
-    const matchesYear = !selectedYear || car.year.toString() === selectedYear;
-    const matchesPrice = !priceRange || 
+    const matchesMake = !selectedMake || selectedMake === 'all-makes' || car.make === selectedMake;
+    const matchesCondition = !selectedCondition || selectedCondition === 'all-conditions' || car.condition === selectedCondition;
+    const matchesYear = !selectedYear || selectedYear === 'all-years' || car.year.toString() === selectedYear;
+    const matchesPrice = !priceRange || priceRange === 'all-prices' || 
       (priceRange === "under-50k" && car.price < 50000) ||
       (priceRange === "50k-100k" && car.price >= 50000 && car.price < 100000) ||
       (priceRange === "100k-150k" && car.price >= 100000 && car.price < 150000) ||
@@ -412,7 +412,7 @@ const SecondHandCars = () => {
                     <SelectValue placeholder="Make" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">All Makes</SelectItem>
+                    <SelectItem value="all-makes">All Makes</SelectItem>
                     <SelectItem value="Fiat">Fiat</SelectItem>
                   </SelectContent>
                 </Select>
@@ -422,7 +422,7 @@ const SecondHandCars = () => {
                     <SelectValue placeholder="Year" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">All Years</SelectItem>
+                    <SelectItem value="all-years">All Years</SelectItem>
                     <SelectItem value="2020">2020</SelectItem>
                     <SelectItem value="2019">2019</SelectItem>
                     <SelectItem value="2018">2018</SelectItem>
@@ -436,7 +436,7 @@ const SecondHandCars = () => {
                     <SelectValue placeholder="Price Range" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">All Prices</SelectItem>
+                    <SelectItem value="all-prices">All Prices</SelectItem>
                     <SelectItem value="under-50k">Under R50,000</SelectItem>
                     <SelectItem value="50k-100k">R50,000 - R100,000</SelectItem>
                     <SelectItem value="100k-150k">R100,000 - R150,000</SelectItem>
@@ -449,7 +449,7 @@ const SecondHandCars = () => {
                     <SelectValue placeholder="Condition" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">All Conditions</SelectItem>
+                    <SelectItem value="all-conditions">All Conditions</SelectItem>
                     <SelectItem value="Excellent">Excellent</SelectItem>
                     <SelectItem value="Very Good">Very Good</SelectItem>
                     <SelectItem value="Good">Good</SelectItem>
