@@ -9,6 +9,7 @@ import CarParts from "./pages/CarParts";
 import PartDetails from "./pages/PartDetails";
 import Cart from "./pages/Cart";
 import BuyAccidentCars from "./pages/BuyAccidentCars";
+import SecondHandCars from "./pages/SecondHandCars";
 import WorkshopServices from "./pages/WorkshopServices";
 import BookService from "./pages/BookService";
 import NotFound from "./pages/NotFound";
@@ -32,6 +33,7 @@ const App = () => (
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} /> {/* new checkout route */}
             <Route path="/buy-cars" element={<BuyAccidentCars />} />
+            <Route path="/second-hand-cars" element={<SecondHandCars />} />
             <Route path="/workshop" element={<WorkshopServices />} />
             <Route path="/book-service" element={<BookService />} />
             <Route path="*" element={<NotFound />} />
