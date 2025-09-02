@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -188,23 +189,25 @@ const SecondHandCars = () => {
 
   const CarCard = ({ car }: { car: typeof cars[0] }) => (
     <Card className="overflow-hidden hover:shadow-lg transition-shadow">
-      <div className="relative">
-        <img 
-          src={car.image} 
-          alt={`${car.make} ${car.model}`}
-          className="w-full h-48 object-cover"
-        />
-        <div className="absolute top-4 right-4">
-          <Badge className={getConditionColor(car.condition)}>
-            {car.condition}
-          </Badge>
+      <Link to={`/car-details/${car.id}`}>
+        <div className="relative">
+          <img 
+            src={car.image} 
+            alt={`${car.make} ${car.model}`}
+            className="w-full h-48 object-cover"
+          />
+          <div className="absolute top-4 right-4">
+            <Badge className={getConditionColor(car.condition)}>
+              {car.condition}
+            </Badge>
+          </div>
+          <div className="absolute top-4 left-4">
+            <Badge variant="secondary" className="bg-primary text-primary-foreground">
+              R{car.price.toLocaleString()}
+            </Badge>
+          </div>
         </div>
-        <div className="absolute top-4 left-4">
-          <Badge variant="secondary" className="bg-primary text-primary-foreground">
-            R{car.price.toLocaleString()}
-          </Badge>
-        </div>
-      </div>
+      </Link>
       
       <CardContent className="p-6">
         <div className="mb-4">
@@ -270,9 +273,12 @@ const SecondHandCars = () => {
               <Mail className="h-4 w-4 mr-2" />
               Email
             </Button>
-            <Button variant="outline" size="sm">
-              <Heart className="h-4 w-4" />
-            </Button>
+            <Link to={`/car-details/${car.id}`}>
+              <Button variant="outline" size="sm">
+                <Eye className="h-4 w-4 mr-2" />
+                View
+              </Button>
+            </Link>
           </div>
         </div>
       </CardContent>
@@ -358,10 +364,12 @@ const SecondHandCars = () => {
                   <Mail className="h-4 w-4 mr-2" />
                   Email
                 </Button>
-                <Button variant="outline" size="sm">
-                  <Eye className="h-4 w-4 mr-2" />
-                  View Details
-                </Button>
+                <Link to={`/car-details/${car.id}`}>
+                  <Button variant="outline" size="sm">
+                    <Eye className="h-4 w-4 mr-2" />
+                    View Details
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
