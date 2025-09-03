@@ -43,60 +43,83 @@ const CarParts = () => {
   const featuredParts = [
     {
       id: 1,
-      name: "Linear Starter - Fiat Punto",
-      price: "R200.00",
-      originalPice: "R250.00",
-      image: "/parts/linear-starter.jpg",
+      name: "Rear Brake Cylinders - Fiat 500c",
+      price: "R285.00",
+      image: "/parts/Rear brake cylinders.jpg",
       condition: "Used",
       inStock: true,
-      fastDelivery: true
+      fastDelivery: true,
+      engineCode: "169A4"
     },
     {
       id: 2,
-      name: "Regulator",
-      price: "R250",
-      image: "/parts/regulator.jpg",
+      name: "Oil Cooler Housing with Oil Filter Housing - Fiat Doblo/Punto 1.3 Diesel",
+      price: "R2850.00",
+      image: "/parts/Oil cooler housing with oil filter housing.jpg",
       condition: "Used",
       inStock: true,
-      fastDelivery: true
+      fastDelivery: true,
+      engineCode: "199A2"
     },
     {
       id: 3,
-      name: "Fiat Punto Engine (310A6)",
-      price: "R8000.00",
-      originalPrice: "R10000.00",
-      image: "/parts/fiat-punto-engine.jpg",
+      name: "Concentric Sleeve - Fiat Stilo 1.9 JTD",
+      price: "R2850.00",
+      image: "/parts/Concentric sleeve.jpg",
       condition: "Used",
       inStock: true,
-      fastDelivery: false
+      fastDelivery: false,
+      engineCode: "192A1"
     },
     {
       id: 4,
-      name: "500X Suspension Strut",
-      price: "R125.00",
-      image: "/api/placeholder/300/200",
-      condition: "New",
+      name: "Shock Saddle - Fiat Fiorino/Punto",
+      price: "R850.00",
+      image: "/parts/Shock saddle.jpg",
+      condition: "Used",
       inStock: true,
-      fastDelivery: true
+      fastDelivery: true,
+      engineCode: "KFT"
     },
     {
       id: 5,
-      name: "Panda Door Handle Set",
-      price: "R35.99",
-      image: "/api/placeholder/300/200",
-      condition: "New",
-      inStock: false,
-      fastDelivery: false
+      name: "Metal Water Pipe - Fiat Punto/Tata Indica",
+      price: "R1200.00",
+      image: "/parts/Metal water pipe.jpg",
+      condition: "Used",
+      inStock: true,
+      fastDelivery: true,
+      engineCode: "350A1/199A7"
     },
     {
       id: 6,
-      name: "Fiat Bravo Alternator",
-      price: "R195.00",
-      originalPrice: "R350.00",
-      image: "/api/placeholder/300/200",
-      condition: "Refurbished",
+      name: "Head Gasket - Fiat Stilo 1.9 Diesel",
+      price: "R850.00",
+      image: "/parts/Head Gasket.jpg",
+      condition: "Used",
       inStock: true,
-      fastDelivery: true
+      fastDelivery: true,
+      engineCode: "192A5"
+    },
+    {
+      id: 7,
+      name: "Complete Thermostat Housing - Fiat Punto",
+      price: "R550.00",
+      image: "/parts/Complete Thermostat housing.jpg",
+      condition: "Used",
+      inStock: true,
+      fastDelivery: true,
+      engineCode: "323B"
+    },
+    {
+      id: 8,
+      name: "Shock Saddle - Fiat Palio/Seina/Strada",
+      price: "R850.00",
+      image: "/parts/Shock saddle (2).jpg",
+      condition: "Used",
+      inStock: true,
+      fastDelivery: true,
+      engineCode: "178D/178F/178D"
     }
   ];
 
@@ -197,26 +220,25 @@ const CarParts = () => {
                               </Badge>
                             )}
                           </div>
-                          {part.originalPrice && (
-                            <div className="absolute top-3 right-3">
-                              <Badge variant="destructive">SALE</Badge>
-                            </div>
-                          )}
+
                         </div>
                       </Link>
                       <CardContent className="p-4">
                         <Link to={`/parts/${part.id}`}>
                           <h3 className="font-semibold text-foreground mb-2 line-clamp-2 hover:text-primary transition-colors">{part.name}</h3>
                         </Link>
-
-                        {/* rating removed */}
+                        
+                        {part.engineCode && (
+                          <div className="mb-2">
+                            <Badge variant="outline" className="text-xs">
+                              Engine Code: {part.engineCode}
+                            </Badge>
+                          </div>
+                        )}
 
                         <div className="flex items-center justify-between mb-4">
                           <div>
                             <span className="text-xl font-bold text-foreground">{part.price}</span>
-                            {part.originalPrice && (
-                              <span className="text-sm text-muted-foreground line-through ml-2">{part.originalPrice}</span>
-                            )}
                           </div>
                           <Badge variant={part.inStock ? 'default' : 'secondary'}>
                             {part.inStock ? 'In Stock' : 'Out of Stock'}
@@ -252,15 +274,17 @@ const CarParts = () => {
                             </Link>
                             <div className="text-right">
                               <span className="text-lg font-bold text-foreground">{part.price}</span>
-                              {part.originalPrice && (
-                                <div className="text-sm text-muted-foreground line-through">{part.originalPrice}</div>
-                              )}
                             </div>
                           </div>
                           <div className="flex items-center gap-2 mb-2">
                             <Badge variant={part.condition === 'New' ? 'default' : 'secondary'} className="text-xs">
                               {part.condition}
                             </Badge>
+                            {part.engineCode && (
+                              <Badge variant="outline" className="text-xs">
+                                Engine Code: {part.engineCode}
+                              </Badge>
+                            )}
                           </div>
                           <div className="flex items-center justify-between">
                             <Badge variant={part.inStock ? 'default' : 'secondary'}>

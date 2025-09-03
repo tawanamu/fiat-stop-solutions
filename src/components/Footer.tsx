@@ -7,7 +7,7 @@ const Footer = () => {
         <div className="grid md:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="col-span-1">
-            <h3 className="text-2xl font-bold text-primary mb-4">1stop Fiat Stop</h3>
+            <h3 className="text-2xl font-bold text-primary mb-4">One Stop Fiate Spares</h3>
             <p className="text-gray-300 mb-6">
               Your trusted automotive partner for Fiat parts, repairs, and services in South Africa.
             </p>

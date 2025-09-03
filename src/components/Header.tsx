@@ -2,8 +2,14 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useCart } from "@/contexts/CartContext";
-import { Menu, X, Phone, MapPin, ShoppingCart } from "lucide-react";
+import { Menu, X, Phone, MapPin, ShoppingCart, ChevronDown } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -14,9 +20,15 @@ const Header = () => {
   const navigation = [
     { name: "Home", href: "/" },
     { name: "Car Parts", href: "/parts" },
-    { name: "Second-Hand Cars", href: "/second-hand-cars" },
+    { 
+      name: "Cars Sells", 
+      href: "#", 
+      dropdown: [
+        { name: "Second-Hand Cars", href: "/second-hand-cars" },
+        { name: "Buy Accident Cars", href: "/buy-cars" }
+      ]
+    },
     { name: "Workshop & Electrical", href: "/workshop" },
-    { name: "Buy Accident Cars", href: "/buy-cars" },
     { name: "Contact", href: "/#contact" }
   ];
 
@@ -42,14 +54,40 @@ const Header = () => {
             {/* Logo */}
             <div className="flex-shrink-0">
               <Link to="/" className="text-2xl font-bold text-primary hover:text-primary/80 transition-colors">
-                1stop Fiat Stop
+                One Stop Fiate Spares
               </Link>
             </div>
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex space-x-8">
               {navigation.map((item) => (
-                item.href.startsWith('#') ? (
+                item.dropdown ? (
+                  <DropdownMenu key={item.name}>
+                    <DropdownMenuTrigger asChild>
+                      <Button 
+                        variant="ghost" 
+                        className="text-foreground hover:text-primary transition-colors duration-200 font-medium p-0 h-auto"
+                      >
+                        {item.name}
+                        <ChevronDown className="ml-1 h-4 w-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="start" className="w-48">
+                      {item.dropdown.map((dropdownItem) => (
+                        <DropdownMenuItem key={dropdownItem.name} asChild>
+                          <Link
+                            to={dropdownItem.href}
+                            className={`w-full hover:text-white ${
+                              location.pathname === dropdownItem.href ? 'text-primary' : ''
+                            }`}
+                          >
+                            {dropdownItem.name}
+                          </Link>
+                        </DropdownMenuItem>
+                      ))}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                ) : item.href.startsWith('#') ? (
                   <a
                     key={item.name}
                     href={item.href}
@@ -116,7 +154,25 @@ const Header = () => {
             <div className="md:hidden absolute top-16 left-0 right-0 bg-background border-b border-border shadow-lg">
               <nav className="px-4 py-4 space-y-4">
                 {navigation.map((item) => (
-                  item.href.startsWith('#') ? (
+                  item.dropdown ? (
+                    <div key={item.name} className="space-y-2">
+                      <div className="text-foreground font-medium text-lg">{item.name}</div>
+                      <div className="pl-4 space-y-2">
+                        {item.dropdown.map((dropdownItem) => (
+                          <Link
+                            key={dropdownItem.name}
+                            to={dropdownItem.href}
+                            className={`block text-foreground hover:text-primary transition-colors duration-200 font-medium ${
+                              location.pathname === dropdownItem.href ? 'text-primary' : ''
+                            }`}
+                            onClick={() => setIsMenuOpen(false)}
+                          >
+                            {dropdownItem.name}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  ) : item.href.startsWith('#') ? (
                     <a
                       key={item.name}
                       href={item.href}
@@ -141,11 +197,11 @@ const Header = () => {
                 <div className="pt-4 border-t border-border space-y-2 text-sm text-muted-foreground">
                   <div className="flex items-center space-x-2">
                     <Phone className="h-4 w-4" />
-                    <span>0123 456 789</span>
+                    <span>+27 82 068 8246</span>
                   </div>
                   <div className="flex items-center space-x-2">
                     <MapPin className="h-4 w-4" />
-                    <span>Manchester, UK</span>
+                    <span>119 Houghton Rd, Clairwood, Durban</span>
                   </div>
                 </div>
               </nav>

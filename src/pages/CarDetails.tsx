@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -16,79 +17,98 @@ import {
   Share2,
   CheckCircle,
   User,
-  Clock
+  Clock,
+  Maximize2,
+  X,
+  MessageCircle
 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 const CarDetails = () => {
   const { id } = useParams();
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [isFullscreenOpen, setIsFullscreenOpen] = useState(false);
 
   // Car data - in a real app, this would come from an API
   const cars = [
     {
       id: 1,
       make: "Fiat",
-      model: "500",
-      year: 2018,
-      mileage: 45000,
-      price: 85000,
-      condition: "Excellent",
+      model: "Strada 1.4 8v",
+      year: 2011,
+      mileage: 0, // Not specified in the information
+      price: 50000,
+      condition: "Needs Work",
       fuelType: "Petrol",
       transmission: "Manual",
-      color: "Red",
+      color: "Not specified",
       location: "Durban",
       images: [
-        "/parts/fiat-punto-engine.jpg",
-        "/parts/fiat-punto-engine_00.jpg",
-        "/parts/fiat-punto-engine_01.jpg",
-        "/parts/fiat-punto-engine_02.jpg"
+        "/cars/strada_00.jpg",
+        "/cars/strada_01.jpg",
+        "/cars/strada_02.jpg",
+        "/cars/strada_03.jpg",
+        "/cars/strada_04.jpg",
+        "/cars/strada_05.jpg"
       ],
-      features: ["Air Conditioning", "Electric Windows", "Central Locking", "Alloy Wheels", "Power Steering", "ABS Brakes", "Airbags", "Radio/CD"],
-      description: "Beautiful Fiat 500 in excellent condition. One owner, full service history. Perfect city car with great fuel economy. This vehicle has been meticulously maintained and is ready for its next owner. Recent service includes new tires, oil change, and full inspection. No accidents, clean title.",
+      features: ["Logbook Available", "Engine Changed", "Police Clearance Needed"],
+      description: "Fiat Strada 1.4 8v 2011 with logbook available. Vehicle license expires next year. Engine has been changed and police clearance is needed. Price includes all necessary repairs to be done. Contact for more details.",
       specifications: {
-        engineSize: "1.2L",
-        doors: 3,
-        seats: 4,
-        bodyType: "Hatchback",
-        drivetrain: "Front Wheel Drive",
-        fuelCapacity: "35L",
-        servicePlan: "Yes"
+        engineSize: "1.4L",
+        doors: 2,
+        seats: 2,
+        bodyType: "Bakkie",
+        drivetrain: "Rear Wheel Drive",
+        fuelCapacity: "50L",
+        servicePlan: "No"
       },
       contact: {
-        name: "John Smith",
-        phone: "+27 82 123 4567",
-        email: "john@example.com",
+        name: "1stop Fiat Stop",
+        phone: "+27 82 068 8246",
+        email: "1stopshop@gmail.com",
         location: "Durban, KZN"
       },
       history: {
         owners: 1,
         accidents: 0,
-        serviceRecords: "Full",
-        lastService: "2023-11-15"
-      }
+        serviceRecords: "Partial",
+        lastService: "Engine changed"
+      },
+      repairsNeeded: [
+        "Change drive side headlight",
+        "Change left side tail light", 
+        "Change front windscreen",
+        "Need to change combination switch",
+        "Fix exhaust leak",
+        "Brakes need to be done",
+        "One or two small things"
+      ],
+      notes: "Can do R50k on this one. Can do all repairs on the bakkie and get it sorted out. Need couple of days and a deposit."
     },
     {
       id: 2,
       make: "Fiat",
-      model: "Punto",
-      year: 2016,
-      mileage: 78000,
-      price: 65000,
-      condition: "Good",
+      model: "Palio 1.6 16v",
+      year: 2010,
+      mileage: 0, // Not specified in the information
+      price: 40000,
+      condition: "Needs Work",
       fuelType: "Petrol",
       transmission: "Manual",
-      color: "White",
-      location: "Cape Town",
+      color: "Green",
+      location: "Durban",
       images: [
-        "/parts/fiat-punto-engine_01.jpg",
-        "/parts/fiat-punto-engine.jpg",
-        "/parts/fiat-punto-engine_00.jpg"
+        "/cars/pialo_00.jpg",
+        "/cars/pialo_01.jpg",
+        "/cars/pialo_02.jpg",
+        "/cars/pialo_03.jpg",
+        "/cars/pialo_04.jpg",
       ],
-      features: ["Radio/CD", "Power Steering", "Electric Windows", "Remote Central Locking", "ABS Brakes", "Airbags"],
-      description: "Reliable Fiat Punto with recent service. Great first car or economical daily driver. Well maintained with good service history. Perfect for city driving with excellent fuel efficiency.",
+      features: ["Power Steering", "Air Conditioning", "Logbook Available"],
+      description: "Fiat Palio 1.6 16v 2010 in green. Vehicle has logbook and disc expires 10th month this year. Vehicle still on custom name. Recently acquired vehicle with some issues that need attention.",
       specifications: {
-        engineSize: "1.4L",
+        engineSize: "1.6L",
         doors: 5,
         seats: 5,
         bodyType: "Hatchback",
@@ -97,17 +117,27 @@ const CarDetails = () => {
         servicePlan: "No"
       },
       contact: {
-        name: "Sarah Johnson",
-        phone: "+27 84 567 8901",
-        email: "sarah@example.com",
-        location: "Cape Town, WC"
+        name: "1stop Fiat Stop",
+        phone: "+27 82 068 8246",
+        email: "1stopshop@gmail.com",
+        location: "Durban, KZN"
       },
       history: {
-        owners: 2,
+        owners: 1,
         accidents: 0,
-        serviceRecords: "Good",
-        lastService: "2023-10-20"
-      }
+        serviceRecords: "Partial",
+        lastService: "Recently acquired"
+      },
+      repairsNeeded: [
+        "Need set of tyres",
+        "Brakes need to be done",
+        "Window clips are broken",
+        "Power steering is leaking but still drives with soft steering",
+        "Air conditioning needs gas",
+        "Rev gets stuck just above 10,000rpm - need to change throttle body",
+        "Driver side fog cover - can't find replacement"
+      ],
+      notes: "This green Palio was just acquired so hasn't been driven much. Can do R40k on this one. Contact for more details."
     }
   ];
 
@@ -139,6 +169,7 @@ const CarDetails = () => {
       case 'Excellent': return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
       case 'Very Good': return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200';
       case 'Good': return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
+      case 'Needs Work': return 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200';
       default: return 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200';
     }
   };
@@ -166,14 +197,15 @@ const CarDetails = () => {
               {/* Left Column - Images and Details */}
               <div className="lg:col-span-2 space-y-6">
                 
-                {/* Main Image */}
-                <Card className="overflow-hidden">
-                  <div className="relative">
-                    <img 
-                      src={car.images[0]} 
-                      alt={`${car.make} ${car.model}`}
-                      className="w-full h-80 object-cover"
-                    />
+                                 {/* Main Image */}
+                 <Card className="overflow-hidden">
+                   <div className="relative group aspect-[4/3]">
+                     <img 
+                       src={car.images[selectedImageIndex]} 
+                       alt={`${car.make} ${car.model}`}
+                       className="w-full h-full object-cover cursor-pointer"
+                       onClick={() => setIsFullscreenOpen(true)}
+                     />
                     <div className="absolute top-4 right-4">
                       <Badge className={getConditionColor(car.condition)}>
                         {car.condition}
@@ -184,17 +216,32 @@ const CarDetails = () => {
                         R{car.price.toLocaleString()}
                       </Badge>
                     </div>
+                    <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <Button
+                        size="sm"
+                        variant="secondary"
+                        className="bg-black/50 hover:bg-black/70 text-white"
+                        onClick={() => setIsFullscreenOpen(true)}
+                      >
+                        <Maximize2 className="h-4 w-4" />
+                      </Button>
+                    </div>
                   </div>
                 </Card>
 
                 {/* Image Gallery */}
                 <div className="grid grid-cols-4 gap-2">
-                  {car.images.slice(1).map((image, index) => (
+                  {car.images.map((image, index) => (
                     <img 
                       key={index}
                       src={image} 
-                      alt={`${car.make} ${car.model} ${index + 2}`}
-                      className="w-full h-20 object-cover rounded-md cursor-pointer hover:opacity-80 transition-opacity"
+                      alt={`${car.make} ${car.model} ${index + 1}`}
+                      className={`w-full h-20 object-cover rounded-md cursor-pointer hover:opacity-80 transition-opacity border-2 ${
+                        selectedImageIndex === index 
+                          ? 'border-primary opacity-100' 
+                          : 'border-transparent opacity-70'
+                      }`}
+                      onClick={() => setSelectedImageIndex(index)}
                     />
                   ))}
                 </div>
@@ -213,7 +260,7 @@ const CarDetails = () => {
                       <div className="text-center">
                         <Gauge className="h-8 w-8 mx-auto mb-2 text-primary" />
                         <p className="text-sm text-muted-foreground">Mileage</p>
-                        <p className="font-semibold">{car.mileage.toLocaleString()} km</p>
+                        <p className="font-semibold">{car.mileage > 0 ? `${car.mileage.toLocaleString()} km` : 'Not specified'}</p>
                       </div>
                       <div className="text-center">
                         <Fuel className="h-8 w-8 mx-auto mb-2 text-primary" />
@@ -289,6 +336,30 @@ const CarDetails = () => {
                   </CardContent>
                 </Card>
 
+                {/* Repairs Needed */}
+                {car.repairsNeeded && car.repairsNeeded.length > 0 && (
+                  <Card>
+                    <CardContent className="p-6">
+                      <h3 className="text-xl font-semibold mb-4 text-orange-600">Repairs Needed</h3>
+                      <div className="space-y-2">
+                        {car.repairsNeeded.map((repair, index) => (
+                          <div key={index} className="flex items-start">
+                            <span className="text-orange-500 mr-2 mt-1">•</span>
+                            <span className="text-sm">{repair}</span>
+                          </div>
+                        ))}
+                      </div>
+                      {car.notes && (
+                        <div className="mt-4 p-3 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
+                          <p className="text-sm text-orange-800 dark:text-orange-200">
+                            <strong>Note:</strong> {car.notes}
+                          </p>
+                        </div>
+                      )}
+                    </CardContent>
+                  </Card>
+                )}
+
                 {/* Vehicle History */}
                 <Card>
                   <CardContent className="p-6">
@@ -333,9 +404,19 @@ const CarDetails = () => {
                         <Phone className="h-5 w-5 mr-2" />
                         Call Seller
                       </Button>
-                      <Button variant="outline" size="lg" className="w-full">
-                        <Mail className="h-5 w-5 mr-2" />
-                        Send Message
+                      <Button 
+                        variant="outline" 
+                        size="lg" 
+                        className="w-full"
+                        onClick={() => {
+                          const phoneNumber = car.contact.phone.replace(/\s/g, '');
+                          const message = `Hi, I'm interested in the ${car.year} ${car.make} ${car.model} for R${car.price.toLocaleString()}. Can you provide more details?`;
+                          const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+                          window.open(whatsappUrl, '_blank');
+                        }}
+                      >
+                        <MessageCircle className="h-5 w-5 mr-2" />
+                        WhatsApp
                       </Button>
                       <div className="flex gap-2">
                         <Button variant="outline" size="lg" className="flex-1">
@@ -364,8 +445,8 @@ const CarDetails = () => {
                           <span className="text-sm">{car.contact.phone}</span>
                         </div>
                         <div className="flex items-center">
-                          <Mail className="h-4 w-4 text-muted-foreground mr-2" />
-                          <span className="text-sm">{car.contact.email}</span>
+                          <MessageCircle className="h-4 w-4 text-muted-foreground mr-2" />
+                          <span className="text-sm">WhatsApp Available</span>
                         </div>
                         <div className="flex items-center">
                           <MapPin className="h-4 w-4 text-muted-foreground mr-2" />
@@ -425,6 +506,56 @@ const CarDetails = () => {
       </main>
       
       <Footer />
+
+      {/* Fullscreen Image Modal */}
+      {isFullscreenOpen && (
+        <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4">
+          <div className="relative max-w-7xl max-h-full">
+            <img 
+              src={car.images[selectedImageIndex]} 
+              alt={`${car.make} ${car.model}`}
+              className="max-w-full max-h-full object-contain"
+            />
+            
+            {/* Close Button */}
+            <Button
+              variant="secondary"
+              size="sm"
+              className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white"
+              onClick={() => setIsFullscreenOpen(false)}
+            >
+              <X className="h-4 w-4" />
+            </Button>
+            
+            {/* Navigation Arrows */}
+            {car.images.length > 1 && (
+              <>
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white"
+                  onClick={() => setSelectedImageIndex(selectedImageIndex > 0 ? selectedImageIndex - 1 : car.images.length - 1)}
+                >
+                  ←
+                </Button>
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white"
+                  onClick={() => setSelectedImageIndex(selectedImageIndex < car.images.length - 1 ? selectedImageIndex + 1 : 0)}
+                >
+                  →
+                </Button>
+              </>
+            )}
+            
+            {/* Image Counter */}
+            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
+              {selectedImageIndex + 1} / {car.images.length}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

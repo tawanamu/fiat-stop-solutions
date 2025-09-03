@@ -26,70 +26,70 @@ const PartDetails = () => {
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
 
-  // Mock data - in a real app, this would come from API/database
+  // Parts data - matches the CarParts page inventory
   const mockParts = [
     {
       id: 1,
-      name: "Linear Starter - Fiat Punto",
-      price: "R200.00",
-      originalPrice: "R250.00",
+      name: "Rear Brake Cylinders - Fiat 500c",
+      price: "R285.00",
       images: [
-        "/parts/linear-starter.jpg",
-        "/parts/linear-starter_00.jpg",
+        "/parts/Rear brake cylinders.jpg",
+        "/parts/Rear brake cylinders.jpg"
       ],
       condition: "Used",
       inStock: true,
       fastDelivery: true,
-      partNumber: "BP500-001",
-      brand: "Genuine Fiat",
-      warranty: "12 months",
+      partNumber: "N/A",
+      brand: "Fiat",
+      warranty: "6 months",
+      engineCode: "169A4",
       compatibility: [
-        "Fiat 500 (2007-2020)",
-        "Fiat 500C (2009-2020)",
-        "Fiat 500L (2012-2019)"
+        "Fiat 500c (2009-2020)",
+        "Fiat 500 (2007-2020)"
       ],
-      description: "High-quality linear starter for Fiat Punto models. This part is tested and guaranteed to meet OEM specifications. It ensures reliable starting performance and is compatible with various Fiat models. Ideal for replacing worn or faulty starters, this part comes with a 12-month warranty for peace of mind.",
+      description: "High-quality rear brake cylinders for Fiat 500c models. These brake cylinders are tested and guaranteed to meet OEM specifications. They ensure reliable braking performance and are compatible with various Fiat 500 models. Perfect for replacing worn or faulty brake cylinders.",
       features: [
         "OEM quality guaranteed",
-        "Reliable starting performance",
+        "Reliable braking performance",
         "Tested for durability",
-        "Easy installation"
+        "Easy installation",
+        "Engine Code: 169A4"
       ]
     },
     {
       id: 2,
-      name: "Regulator",
-      price: "R250.00",
+      name: "Oil Cooler Housing with Oil Filter Housing - Fiat Doblo/Punto 1.3 Diesel",
+      price: "R2850.00",
       images: [
-        "/parts/regulator.jpg",
-        "/parts/regulator_00.jpg"
+        "/parts/Oil cooler housing with oil filter housing.jpg",
       ],
-      condition: "Refurbished",
+      condition: "Used",
       inStock: true,
       fastDelivery: true,
       partNumber: "N/A",
-      brand: "N/A",
-      warranty: "N/A",
+      brand: "Fiat",
+      warranty: "6 months",
+      engineCode: "199A2",
       compatibility: [
-        "Fiat Bravo (2007-2014)",
-        "Fiat Tipo (2015-2018)"
+        "Fiat Doblo 1.3 Diesel",
+        "Fiat Punto 1.3 Diesel"
       ],
-      description: "Refurbished regulator for Fiat models. This part has been professionally refurbished and tested to ensure optimal performance. It includes a voltage regulator and is ready to install. Perfect for restoring electrical systems in Fiat vehicles.",
+      description: "Complete oil cooler housing with integrated oil filter housing for Fiat Doblo and Punto 1.3 Diesel models. This part ensures proper oil cooling and filtration for optimal engine performance. Tested and ready for installation.",
       features: [
-        "Professionally refurbished",
-        "Tested output and bearings",
-        "Includes voltage regulator",
+        "Complete housing assembly",
+        "Integrated oil filter housing",
+        "Optimal oil cooling",
+        "Engine Code: 199A2",
         "Ready to install"
       ]
     },
     {
       id: 3,
-      name: "Fiat Punto Engine (310A6)",
-      price: "R8,000.00",
-      originalPrice: "R10,000.00",
+      name: "Concentric Sleeve - Fiat Stilo 1.9 JTD",
+      price: "R2850.00",
       images: [
-        "/parts/fiat-punto-engine.jpg",
-        "/parts/fiat-punto-engine_00.jpg"
+        "/parts/Concentric sleeve.jpg",
+        "/parts/Concentric sleeve.jpg"
       ],
       condition: "Used",
       inStock: true,
@@ -97,15 +97,155 @@ const PartDetails = () => {
       partNumber: "N/A",
       brand: "Fiat",
       warranty: "6 months",
+      engineCode: "192A1",
       compatibility: [
-        "Fiat Punto (2005-2018)",
-        "Fiat Grande Punto (2005-2018)"
+        "Fiat Stilo 1.9 JTD (2001-2007)"
       ],
-      description: "Used Fiat Punto engine in excellent condition. This engine has been thoroughly inspected and is ready for installation. It comes with a 6-month warranty and is compatible with various Fiat Punto models.",
+      description: "Concentric sleeve for Fiat Stilo 1.9 JTD engine. This precision component is essential for proper engine operation and has been tested to ensure optimal performance. Compatible with the 192A1 engine code.",
       features: [
-        "Thoroughly inspected",
-        "Ready for installation",
-        "6-month warranty included"
+        "Precision engineered",
+        "Essential engine component",
+        "Tested for performance",
+        "Engine Code: 192A1",
+        "6-month warranty"
+      ]
+    },
+    {
+      id: 4,
+      name: "Shock Saddle - Fiat Fiorino/Punto",
+      price: "R850.00",
+      images: [
+        "/parts/Shock saddle.jpg",
+        "/parts/Shock saddle.jpg"
+      ],
+      condition: "Used",
+      inStock: true,
+      fastDelivery: true,
+      partNumber: "N/A",
+      brand: "Fiat",
+      warranty: "6 months",
+      engineCode: "KFT",
+      compatibility: [
+        "Fiat Fiorino",
+        "Fiat Punto"
+      ],
+      description: "Shock saddle for Fiat Fiorino and Punto models. This suspension component is crucial for proper shock absorber mounting and vehicle stability. Tested and ready for installation with KFT engine compatibility.",
+      features: [
+        "Suspension component",
+        "Proper shock mounting",
+        "Vehicle stability",
+        "Engine Code: KFT",
+        "Easy installation"
+      ]
+    },
+    {
+      id: 5,
+      name: "Metal Water Pipe - Fiat Punto/Tata Indica",
+      price: "R1200.00",
+      images: [
+        "/parts/Metal water pipe.jpg",
+      ],
+      condition: "Used",
+      inStock: true,
+      fastDelivery: true,
+      partNumber: "N/A",
+      brand: "Fiat",
+      warranty: "6 months",
+      engineCode: "350A1/199A7",
+      compatibility: [
+        "Fiat Punto",
+        "Tata Indica"
+      ],
+      description: "Metal water pipe for Fiat Punto and Tata Indica models. This cooling system component ensures proper coolant circulation and engine temperature regulation. Compatible with multiple engine codes for versatile application.",
+      features: [
+        "Cooling system component",
+        "Proper coolant circulation",
+        "Temperature regulation",
+        "Engine Code: 350A1/199A7",
+        "Multi-model compatibility"
+      ]
+    },
+    {
+      id: 6,
+      name: "Head Gasket - Fiat Stilo 1.9 Diesel",
+      price: "R850.00",
+      images: [
+        "/parts/Head Gasket.jpg",
+        "/parts/Head Gasket.jpg"
+      ],
+      condition: "Used",
+      inStock: true,
+      fastDelivery: true,
+      partNumber: "N/A",
+      brand: "Fiat",
+      warranty: "6 months",
+      engineCode: "192A5",
+      compatibility: [
+        "Fiat Stilo 1.9 Diesel"
+      ],
+      description: "Head gasket for Fiat Stilo 1.9 Diesel engine. This critical engine component ensures proper sealing between the engine block and cylinder head. Essential for maintaining compression and preventing coolant/oil mixing.",
+      features: [
+        "Critical engine component",
+        "Proper sealing",
+        "Compression maintenance",
+        "Engine Code: 192A5",
+        "Prevents fluid mixing"
+      ]
+    },
+    {
+      id: 7,
+      name: "Complete Thermostat Housing - Fiat Punto",
+      price: "R550.00",
+      images: [
+        "/parts/Complete Thermostat housing.jpg",
+        "/parts/Complete Thermostat housing.jpg"
+      ],
+      condition: "Used",
+      inStock: true,
+      fastDelivery: true,
+      partNumber: "N/A",
+      brand: "Fiat",
+      warranty: "6 months",
+      engineCode: "323B",
+      compatibility: [
+        "Fiat Punto"
+      ],
+      description: "Complete thermostat housing for Fiat Punto models. This cooling system component includes the thermostat and housing assembly, ensuring proper engine temperature control and coolant flow regulation.",
+      features: [
+        "Complete assembly",
+        "Temperature control",
+        "Coolant flow regulation",
+        "Engine Code: 323B",
+        "Ready to install"
+      ]
+    },
+    {
+      id: 8,
+      name: "Shock Saddle - Fiat Palio/Seina/Strada",
+      price: "R850.00",
+      images: [
+        "/parts/Shock saddle (2).jpg",
+        "/parts/Shock saddle (2).jpg"
+      ],
+      condition: "Used",
+      inStock: true,
+      fastDelivery: true,
+      partNumber: "N/A",
+      brand: "Fiat",
+      warranty: "6 months",
+      engineCode: "178D/178F/178D",
+      compatibility: [
+        "Fiat Palio",
+        "Fiat Seina",
+        "Fiat Strada"
+      ],
+      description: "Shock saddle for Fiat Palio, Seina, and Strada models. This suspension component provides proper mounting for shock absorbers and contributes to vehicle stability and ride comfort. Compatible with multiple engine codes.",
+      features: [
+        "Multi-model compatibility",
+        "Suspension mounting",
+        "Vehicle stability",
+        "Engine Code: 178D/178F/178D",
+        "Ride comfort"
       ]
     }
   ];
@@ -119,7 +259,6 @@ const PartDetails = () => {
         id: part.id,
         name: part.name,
         price: part.price,
-        originalPrice: part.originalPrice,
         image: part.images[0],
         condition: part.condition
       });
@@ -203,12 +342,6 @@ const PartDetails = () => {
 
                 <div className="flex items-center gap-3 mb-6">
                   <span className="text-3xl font-bold text-foreground">{part.price}</span>
-                  {part.originalPrice && (
-                    <>
-                      <span className="text-xl text-muted-foreground line-through">{part.originalPrice}</span>
-                      <Badge variant="destructive">Save R{(parseFloat(part.originalPrice.replace('R', '')) - parseFloat(part.price.replace('R', ''))).toFixed(2)}</Badge>
-                    </>
-                  )}
                 </div>
               </div>
 
@@ -286,6 +419,12 @@ const PartDetails = () => {
                       <span className="text-muted-foreground">Condition:</span>
                       <span className="font-medium">{part.condition}</span>
                     </div>
+                    {part.engineCode && (
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Engine Code:</span>
+                        <span className="font-medium">{part.engineCode}</span>
+                      </div>
+                    )}
                   </div>
                 </CardContent>
               </Card>
