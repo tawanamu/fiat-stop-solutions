@@ -105,7 +105,7 @@ const WorkshopServices = () => {
         <section className="relative py-20 overflow-hidden">
           <div className="absolute inset-0">
             <img 
-              src={workshopImage} 
+              src= "https://ik.imagekit.io/secula/One%20Stop%20Fiat%20Shop/1G5A4741.jpg?updatedAt=1758577166874" 
               alt="Professional automotive workshop"
               className="w-full h-full object-cover"
             />
@@ -265,7 +265,7 @@ const WorkshopServices = () => {
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
                 <img 
-                  src={electricalImage} 
+                  src= "https://ik.imagekit.io/secula/One%20Stop%20Fiat%20Shop/1G5A4743.jpg?updatedAt=1758577084994"
                   alt="Modern automotive diagnostic equipment"
                   className="w-full h-80 object-cover rounded-lg shadow-lg"
                 />

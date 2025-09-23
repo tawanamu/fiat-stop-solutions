@@ -10,7 +10,7 @@ const Hero = () => {
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-r from-automotive-gray/90 to-automotive-gray/70 z-10" />
         <img 
-          src={workshopImage} 
+          src= "https://ik.imagekit.io/secula/One%20Stop%20Fiat%20Shop/1G5A4711.jpg?updatedAt=1758577163906"
           alt="Professional automotive workshop" 
           className="w-full h-full object-cover"
         />

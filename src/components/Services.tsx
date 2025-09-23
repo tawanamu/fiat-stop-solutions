@@ -21,7 +21,7 @@ const Services = () => {
       icon: ShoppingBag,
       title: "Car Parts Store",
       description: "Extensive inventory of new and used Fiat parts. Quality guaranteed with competitive pricing.",
-      image: carPartsImage,
+      image: "https://ik.imagekit.io/secula/One%20Stop%20Fiat%20Shop/1G5A4737.jpg?updatedAt=1758577165963",
       features: ["New & Used Parts", "Quality Guarantee", "Competitive Prices", "Fast Delivery"],
       cta: "Browse Parts",
       href: "/parts"
@@ -30,7 +30,7 @@ const Services = () => {
       icon: Wrench,
       title: "Mechanical Workshop",
       description: "Expert mechanical repairs and servicing by certified technicians for all Fiat models.",
-      image: "/api/placeholder/400/300",
+      image: "https://ik.imagekit.io/secula/One%20Stop%20Fiat%20Shop/1G5A4741.jpg?updatedAt=1758577166874",
       features: ["Certified Technicians", "All Fiat Models", "Service & Repairs", "MOT Testing"],
       cta: "Book Service",
       href: "/book-service"
@@ -39,7 +39,7 @@ const Services = () => {
       icon: Zap,
       title: "Auto Electrical Shop",
       description: "Specialized electrical diagnostics and repairs using the latest automotive technology.",
-      image: electricalImage,
+      image: "https://ik.imagekit.io/secula/One%20Stop%20Fiat%20Shop/1G5A4743.jpg?updatedAt=1758577084994",
       features: ["Electrical Diagnostics", "ECU Programming", "Wiring Repairs", "Battery Testing"],
       cta: "Get Diagnosis",
       href: "/workshop"
@@ -48,7 +48,7 @@ const Services = () => {
       icon: Car,
       title: "Buy Accident Cars",
       description: "We purchase accident-damaged vehicles and non-runners. Quick valuation and fair prices.",
-      image: accidentCarsImage,
+      image: "https://ik.imagekit.io/secula/One%20Stop%20Fiat%20Shop/1G5A4763.jpg?updatedAt=1758578441316",
       features: ["Quick Valuation", "Fair Prices", "Free Collection", "Instant Payment"],
       cta: "Get Quote",
       href: "/buy-cars"
