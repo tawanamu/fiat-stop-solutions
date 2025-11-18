@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useCart } from "@/contexts/CartContext";
 import { useAuth } from "@/contexts/AuthContext";
-import { Menu, X, ShoppingCart, ChevronDown, User, LogOut, Settings } from "lucide-react";
+import { Menu, X, ShoppingCart, ChevronDown, User, LogOut, Settings, Phone } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import {
   DropdownMenu,
@@ -36,6 +36,33 @@ const Header = () => {
 
   return (
     <>
+      {/* Top contact bar with WhatsApp link */}
+      <div className="w-full bg-foreground/5 text-sm text-muted-foreground">
+        <div className="container mx-auto px-4 py-2 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <a href="mailto:1stopshop@gmail.com" className="hover:text-foreground">1stopshop@gmail.com</a>
+            <a href="tel:+27820688246" className="hover:text-foreground flex items-center">
+              <Phone className="h-4 w-4 mr-2" />
+              +27 82 068 8246
+            </a>
+          </div>
+          <div className="hidden sm:flex items-center gap-4">
+            <a
+              href="https://wa.me/27820688246"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Chat on WhatsApp"
+              className="text-sm text-green-600 hover:underline"
+            >
+              Chat on WhatsApp
+            </a>
+            <div className="text-xs">
+              119 Houghton Rd, Clairwood, Durban, 4052
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Header */}
       <header className="fixed w-full top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
         <div className="container mx-auto px-4">

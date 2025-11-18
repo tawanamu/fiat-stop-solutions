@@ -65,9 +65,9 @@ const ContactForm = () => {
                     <Phone className="h-6 w-6 text-primary" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-foreground">Phone</h4>
+                    <h4 className="font-semibold text-foreground">Phone or WhatsApp</h4>
                     <p className="text-muted-foreground">
-                      <a href="tel:+27820688246" className="hover:text-foreground">+27 82 068 8246</a>
+                      <a href="https://wa.me/27820688246" className="hover:text-foreground">+27 82 068 8246</a>
                     </p>
                     <p className="text-sm text-muted-foreground">Available 9 AM - 6 PM</p>
                   </div>
@@ -80,7 +80,7 @@ const ContactForm = () => {
                   <div>
                     <h4 className="font-semibold text-foreground">Email</h4>
                     <p className="text-muted-foreground">
-                      <a href="mailto:1stopshop@gmail.com" className="hover:text-foreground">1stopshop@gmail.com</a>
+                      <a href="mailto:1stopshop@gmail.com" className="hover:text-foreground">1stopfiatshop@gmail.com</a>
                     </p>
                     <p className="text-sm text-muted-foreground">We respond within 24 hours</p>
                   </div>

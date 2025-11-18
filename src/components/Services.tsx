@@ -9,7 +9,8 @@ import {
   ArrowRight,
   Settings,
   Shield,
-  Clock
+  Clock,
+  Droplet
 } from "lucide-react";
 import carPartsImage from "@/assets/car-parts.jpg";
 import electricalImage from "@/assets/electrical-shop.jpg";
@@ -21,7 +22,7 @@ const Services = () => {
       icon: ShoppingBag,
       title: "Car Parts Store",
       description: "Extensive inventory of new and used Fiat parts. Quality guaranteed with competitive pricing.",
-      image: "https://ik.imagekit.io/secula/One%20Stop%20Fiat%20Shop/1G5A4737.jpg?updatedAt=1758577165963",
+      image: "https://ik.imagekit.io/secula/One%20Stop%20Fiat%20Shop/car-parts.jpg",
       features: ["New & Used Parts", "Quality Guarantee", "Competitive Prices", "Fast Delivery"],
       cta: "Browse Parts",
       href: "/parts"
@@ -29,11 +30,11 @@ const Services = () => {
     {
       icon: Wrench,
       title: "Mechanical Workshop",
-      description: "Expert mechanical repairs and servicing by certified technicians for all Fiat models.",
+      description: "Expert mechanical repairs and servicing by Seasoned Proffesionals for all Fiat models.",
       image: "https://ik.imagekit.io/secula/One%20Stop%20Fiat%20Shop/1G5A4741.jpg?updatedAt=1758577166874",
-      features: ["Certified Technicians", "All Fiat Models", "Service & Repairs", "MOT Testing"],
+      features: ["Seasoned Proffesionals", "All Fiat Models", "Service & Repairs", "MOT Testing"],
       cta: "Book Service",
-      href: "/book-service"
+      href: "https://wa.me/27820688246"
     },
     {
       icon: Zap,
@@ -43,6 +44,15 @@ const Services = () => {
       features: ["Electrical Diagnostics", "ECU Programming", "Wiring Repairs", "Battery Testing"],
       cta: "Get Diagnosis",
       href: "/workshop"
+    },
+    {
+      icon: Droplet,
+      title: "Air Conditioning Service",
+      description: "Full A/C diagnostics, regas and repairs for all car makes — keep your cabin cool and comfortable.",
+      image: "https://ik.imagekit.io/secula/One%20Stop%20Fiat%20Shop/ac-service.jpg", // replace with your asset if available
+      features: ["A/C Diagnostics", "Regas & Refrigerant", "Leak Detection & Repair", "Compressor Replacement"],
+      cta: "Book A/C Service",
+      href: "https://wa.me/27820688246"
     },
     {
       icon: Car,
@@ -126,7 +136,7 @@ const Services = () => {
               </div>
               <h4 className="text-lg font-semibold text-foreground">Expert Knowledge</h4>
               <p className="text-muted-foreground text-center">
-                Specialized in Fiat vehicles with years of experience and certified technicians.
+                Specialized in Fiat vehicles with years of experience and Seasoned Proffesionals.
               </p>
             </div>
             <div className="flex flex-col items-center space-y-4">

@@ -45,7 +45,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center space-x-3">
                 <Mail className="h-4 w-4 text-primary" />
-                <span className="text-gray-300">1stopshop@gmail.com</span>
+                <span className="text-gray-300">1stopfiatshop@gmail.com</span>
               </div>
               <div className="flex items-start space-x-3">
                 <MapPin className="h-4 w-4 text-primary mt-1" />
@@ -64,15 +64,18 @@ const Footer = () => {
             <div className="space-y-2 text-gray-300">
               <div className="flex justify-between">
                 <span>Mon - Fri:</span>
-                <span>9AM - 6PM</span>
+                <span>8AM - 5PM</span>
+              </div>
+              <div className="flex justify-between">
+                <span>(Friday Closed form 11:30AM - 1:45PM)</span>
               </div>
               <div className="flex justify-between">
                 <span>Saturday:</span>
-                <span>9AM - 4PM</span>
+                <span>8AM - 4PM</span>
               </div>
               <div className="flex justify-between">
-                <span>Sunday:</span>
-                <span>Closed</span>
+                <span>Sunday & Public Holidays:</span>
+                <span>9AM - 2:30PM</span>
               </div>
             </div>
           </div>

@@ -118,8 +118,7 @@ const WorkshopServices = () => {
                 Professional Workshop & Auto Electrical Services
               </h1>
               <p className="text-xl text-white/90 mb-8">
-                Complete mechanical and electrical repair services for all Fiat models. 
-                Expert technicians using the latest diagnostic equipment and genuine parts.
+                Complete mechanical and electrical repair services for all Fiat models. We also offer expert A/C servicing and diagnostics.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link to="/book-service">
@@ -145,8 +144,8 @@ const WorkshopServices = () => {
                 <div className="bg-primary/10 rounded-full p-4 w-16 h-16 mb-4 flex items-center justify-center">
                   <Award className="h-8 w-8 text-primary" />
                 </div>
-                <h3 className="font-semibold text-foreground mb-2">Certified Experts</h3>
-                <p className="text-muted-foreground text-sm">ASE certified technicians with Fiat specialization</p>
+                <h3 className="font-semibold text-foreground mb-2">Seasoned Proffesionals</h3>
+                <p className="text-muted-foreground text-sm">Proffesionals with years of experience</p>
               </div>
               <div className="flex flex-col items-center">
                 <div className="bg-primary/10 rounded-full p-4 w-16 h-16 mb-4 flex items-center justify-center">
@@ -256,10 +255,6 @@ const WorkshopServices = () => {
         <section className="py-16">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-foreground mb-4">State-of-the-Art Equipment</h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                We invest in the latest diagnostic and repair equipment to provide accurate, efficient service
-              </p>
             </div>
 
             <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -300,12 +295,9 @@ const WorkshopServices = () => {
                 </div>
                 
                 <div className="mt-8">
-                  <h4 className="font-semibold text-foreground mb-4">Our Qualifications</h4>
                   <div className="space-y-2">
                     {qualifications.map((qualification, index) => (
                       <div key={index} className="flex items-center space-x-2">
-                        <CheckCircle className="h-4 w-4 text-primary" />
-                        <span className="text-muted-foreground text-sm">{qualification}</span>
                       </div>
                     ))}
                   </div>
