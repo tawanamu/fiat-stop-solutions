@@ -49,7 +49,7 @@ const Services = () => {
       icon: Droplet,
       title: "Air Conditioning Service",
       description: "Full A/C diagnostics, regas and repairs for all car makes — keep your cabin cool and comfortable.",
-      image: "https://ik.imagekit.io/secula/One%20Stop%20Fiat%20Shop/ac-service.jpg", // replace with your asset if available
+      image: "https://ik.imagekit.io/secula/One%20Stop%20Fiat%20Shop/WhatsApp%20Image%202026-01-07%20at%2012.49.31.jpeg", 
       features: ["A/C Diagnostics", "Regas & Refrigerant", "Leak Detection & Repair", "Compressor Replacement"],
       cta: "Book A/C Service",
       href: "https://wa.me/27820688246"
