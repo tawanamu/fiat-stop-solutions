@@ -23,9 +23,9 @@ const Header = () => {
   const navigation = [
     { name: "Home", href: "/" },
     { name: "Car Parts", href: "/parts" },
-    { 
-      name: "Cars Sells", 
-      href: "#", 
+    {
+      name: "Cars Sells",
+      href: "#",
       dropdown: [
         { name: "Second-Hand Cars", href: "/second-hand-cars" },
         { name: "Buy Accident Cars", href: "/buy-cars" }
@@ -80,8 +80,8 @@ const Header = () => {
                 item.dropdown ? (
                   <DropdownMenu key={item.name}>
                     <DropdownMenuTrigger asChild>
-                      <Button 
-                        variant="ghost" 
+                      <Button
+                        variant="ghost"
                         className="text-foreground hover:text-primary transition-colors duration-200 font-medium p-0 h-auto"
                       >
                         {item.name}
@@ -93,9 +93,8 @@ const Header = () => {
                         <DropdownMenuItem key={dropdownItem.name} asChild>
                           <Link
                             to={dropdownItem.href}
-                            className={`w-full hover:text-white ${
-                              location.pathname === dropdownItem.href ? 'text-primary' : ''
-                            }`}
+                            className={`w-full hover:text-white ${location.pathname === dropdownItem.href ? 'text-primary' : ''
+                              }`}
                           >
                             {dropdownItem.name}
                           </Link>
@@ -115,9 +114,8 @@ const Header = () => {
                   <Link
                     key={item.name}
                     to={item.href}
-                    className={`text-foreground hover:text-primary transition-colors duration-200 font-medium ${
-                      location.pathname === item.href ? 'text-primary' : ''
-                    }`}
+                    className={`text-foreground hover:text-primary transition-colors duration-200 font-medium ${location.pathname === item.href ? 'text-primary' : ''
+                      }`}
                   >
                     {item.name}
                   </Link>
@@ -127,7 +125,7 @@ const Header = () => {
 
             {/* Auth & Cart & Mobile Menu Button */}
             <div className="flex items-center space-x-4">
-              
+
               {/* Authentication */}
               {isAuthenticated ? (
                 <DropdownMenu>
@@ -179,14 +177,14 @@ const Header = () => {
                   </Button>
                 </div>
               )}
-              
+
               {/* Cart Icon */}
               <Link to="/cart">
                 <Button variant="ghost" size="icon" className="relative">
                   <ShoppingCart className="h-5 w-5" />
                   {itemCount > 0 && (
-                    <Badge 
-                      variant="destructive" 
+                    <Badge
+                      variant="destructive"
                       className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center text-xs p-0"
                     >
                       {itemCount}
@@ -194,7 +192,7 @@ const Header = () => {
                   )}
                 </Button>
               </Link>
-              
+
               <Button
                 variant="ghost"
                 size="icon"
@@ -219,9 +217,8 @@ const Header = () => {
                           <Link
                             key={dropdownItem.name}
                             to={dropdownItem.href}
-                            className={`block text-foreground hover:text-primary transition-colors duration-200 font-medium ${
-                              location.pathname === dropdownItem.href ? 'text-primary' : ''
-                            }`}
+                            className={`block text-foreground hover:text-primary transition-colors duration-200 font-medium ${location.pathname === dropdownItem.href ? 'text-primary' : ''
+                              }`}
                             onClick={() => setIsMenuOpen(false)}
                           >
                             {dropdownItem.name}
@@ -242,9 +239,8 @@ const Header = () => {
                     <Link
                       key={item.name}
                       to={item.href}
-                      className={`block text-foreground hover:text-primary transition-colors duration-200 font-medium ${
-                        location.pathname === item.href ? 'text-primary' : ''
-                      }`}
+                      className={`block text-foreground hover:text-primary transition-colors duration-200 font-medium ${location.pathname === item.href ? 'text-primary' : ''
+                        }`}
                       onClick={() => setIsMenuOpen(false)}
                     >
                       {item.name}

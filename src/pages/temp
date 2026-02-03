@@ -1,0 +1,21 @@
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyAhhIF1sm-KDZ5fKqrRAsPACl5RZXalfyY",
+  authDomain: "one-stop-fiat-shop.firebaseapp.com",
+  projectId: "one-stop-fiat-shop",
+  storageBucket: "one-stop-fiat-shop.firebasestorage.app",
+  messagingSenderId: "376999092685",
+  appId: "1:376999092685:web:d334ce38e781a3bb942484",
+  measurementId: "G-Y42LQL56DX"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);

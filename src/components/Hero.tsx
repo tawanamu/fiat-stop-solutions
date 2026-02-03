@@ -9,9 +9,9 @@ const Hero = () => {
       {/* Background */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-r from-automotive-gray/90 to-automotive-gray/70 z-10" />
-        <img 
-          src= "https://ik.imagekit.io/secula/One%20Stop%20Fiat%20Shop/1G5A4711.jpg?updatedAt=1758577163906"
-          alt="Professional automotive workshop" 
+        <img
+          src="https://ik.imagekit.io/secula/One%20Stop%20Fiat%20Shop/1G5A4711.jpg?updatedAt=1758577163906"
+          alt="Professional automotive workshop"
           className="w-full h-full object-cover"
         />
       </div>
@@ -24,10 +24,10 @@ const Hero = () => {
             <span className="text-primary block">Fiat Solution</span>
           </h1>
           <p className="text-xl text-gray-200 mb-8 leading-relaxed">
-            From quality car parts to expert repairs and accident car purchases - 
+            From quality car parts to expert repairs and accident car purchases -
             we're your trusted automotive partner in South Africa.
           </p>
-          
+
           <div className="flex flex-col sm:flex-row gap-4 mb-12">
             <Link to="/parts" className="inline-block">
               <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-automotive">
