@@ -1,274 +1,104 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { useToast } from "@/hooks/use-toast";
+import { Card, CardContent } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useCart } from "@/contexts/CartContext";
+import { useToast } from "@/hooks/use-toast";
+import { usePartBySlug } from "@/hooks/useParts";
 import {
   ShoppingCart,
-  ArrowLeft,
   Truck,
   Shield,
-  RotateCcw,
-  Heart,
-  Share2,
+  ArrowLeft,
+  Plus,
   Minus,
-  Plus
+  Phone,
+  MessageCircle,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 const PartDetails = () => {
-  const { id } = useParams();
+  const { slug } = useParams<{ slug: string }>();
+  const { part, loading, error } = usePartBySlug(slug);
+  const [quantity, setQuantity] = useState(1);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const { addItem } = useCart();
   const { toast } = useToast();
-  const [quantity, setQuantity] = useState(1);
-  const [selectedImage, setSelectedImage] = useState(0);
-
-  // Parts data - matches the CarParts page inventory
-  const mockParts = [
-    {
-      id: 1,
-      name: "Rear Brake Cylinders - Fiat 500c",
-      price: "R285.00",
-      images: [
-        "/parts/Rear brake cylinders.jpg",
-        "/parts/Rear brake cylinders.jpg"
-      ],
-      condition: "Used",
-      inStock: true,
-      fastDelivery: true,
-      partNumber: "N/A",
-      brand: "Fiat",
-      warranty: "6 months",
-      engineCode: "169A4",
-      compatibility: [
-        "Fiat 500c (2009-2020)",
-        "Fiat 500 (2007-2020)"
-      ],
-      description: "High-quality rear brake cylinders for Fiat 500c models. These brake cylinders are tested and guaranteed to meet OEM specifications. They ensure reliable braking performance and are compatible with various Fiat 500 models. Perfect for replacing worn or faulty brake cylinders.",
-      features: [
-        "OEM quality guaranteed",
-        "Reliable braking performance",
-        "Tested for durability",
-        "Easy installation",
-        "Engine Code: 169A4"
-      ]
-    },
-    {
-      id: 2,
-      name: "Oil Cooler Housing with Oil Filter Housing - Fiat Doblo/Punto 1.3 Diesel",
-      price: "R2850.00",
-      images: [
-        "/parts/Oil cooler housing with oil filter housing.jpg",
-      ],
-      condition: "Used",
-      inStock: true,
-      fastDelivery: true,
-      partNumber: "N/A",
-      brand: "Fiat",
-      warranty: "6 months",
-      engineCode: "199A2",
-      compatibility: [
-        "Fiat Doblo 1.3 Diesel",
-        "Fiat Punto 1.3 Diesel"
-      ],
-      description: "Complete oil cooler housing with integrated oil filter housing for Fiat Doblo and Punto 1.3 Diesel models. This part ensures proper oil cooling and filtration for optimal engine performance. Tested and ready for installation.",
-      features: [
-        "Complete housing assembly",
-        "Integrated oil filter housing",
-        "Optimal oil cooling",
-        "Engine Code: 199A2",
-        "Ready to install"
-      ]
-    },
-    {
-      id: 3,
-      name: "Concentric Sleeve - Fiat Stilo 1.9 JTD",
-      price: "R2850.00",
-      images: [
-        "/parts/Concentric sleeve.jpg",
-        "/parts/Concentric sleeve.jpg"
-      ],
-      condition: "Used",
-      inStock: true,
-      fastDelivery: false,
-      partNumber: "N/A",
-      brand: "Fiat",
-      warranty: "6 months",
-      engineCode: "192A1",
-      compatibility: [
-        "Fiat Stilo 1.9 JTD (2001-2007)"
-      ],
-      description: "Concentric sleeve for Fiat Stilo 1.9 JTD engine. This precision component is essential for proper engine operation and has been tested to ensure optimal performance. Compatible with the 192A1 engine code.",
-      features: [
-        "Precision engineered",
-        "Essential engine component",
-        "Tested for performance",
-        "Engine Code: 192A1",
-        "6-month warranty"
-      ]
-    },
-    {
-      id: 4,
-      name: "Shock Saddle - Fiat Fiorino/Punto",
-      price: "R850.00",
-      images: [
-        "/parts/Shock saddle.jpg",
-        "/parts/Shock saddle.jpg"
-      ],
-      condition: "Used",
-      inStock: true,
-      fastDelivery: true,
-      partNumber: "N/A",
-      brand: "Fiat",
-      warranty: "6 months",
-      engineCode: "KFT",
-      compatibility: [
-        "Fiat Fiorino",
-        "Fiat Punto"
-      ],
-      description: "Shock saddle for Fiat Fiorino and Punto models. This suspension component is crucial for proper shock absorber mounting and vehicle stability. Tested and ready for installation with KFT engine compatibility.",
-      features: [
-        "Suspension component",
-        "Proper shock mounting",
-        "Vehicle stability",
-        "Engine Code: KFT",
-        "Easy installation"
-      ]
-    },
-    {
-      id: 5,
-      name: "Metal Water Pipe - Fiat Punto/Tata Indica",
-      price: "R1200.00",
-      images: [
-        "/parts/Metal water pipe.jpg",
-      ],
-      condition: "Used",
-      inStock: true,
-      fastDelivery: true,
-      partNumber: "N/A",
-      brand: "Fiat",
-      warranty: "6 months",
-      engineCode: "350A1/199A7",
-      compatibility: [
-        "Fiat Punto",
-        "Tata Indica"
-      ],
-      description: "Metal water pipe for Fiat Punto and Tata Indica models. This cooling system component ensures proper coolant circulation and engine temperature regulation. Compatible with multiple engine codes for versatile application.",
-      features: [
-        "Cooling system component",
-        "Proper coolant circulation",
-        "Temperature regulation",
-        "Engine Code: 350A1/199A7",
-        "Multi-model compatibility"
-      ]
-    },
-    {
-      id: 6,
-      name: "Head Gasket - Fiat Stilo 1.9 Diesel",
-      price: "R850.00",
-      images: [
-        "/parts/Head Gasket.jpg",
-        "/parts/Head Gasket.jpg"
-      ],
-      condition: "Used",
-      inStock: true,
-      fastDelivery: true,
-      partNumber: "N/A",
-      brand: "Fiat",
-      warranty: "6 months",
-      engineCode: "192A5",
-      compatibility: [
-        "Fiat Stilo 1.9 Diesel"
-      ],
-      description: "Head gasket for Fiat Stilo 1.9 Diesel engine. This critical engine component ensures proper sealing between the engine block and cylinder head. Essential for maintaining compression and preventing coolant/oil mixing.",
-      features: [
-        "Critical engine component",
-        "Proper sealing",
-        "Compression maintenance",
-        "Engine Code: 192A5",
-        "Prevents fluid mixing"
-      ]
-    },
-    {
-      id: 7,
-      name: "Complete Thermostat Housing - Fiat Punto",
-      price: "R550.00",
-      images: [
-        "/parts/Complete Thermostat housing.jpg",
-        "/parts/Complete Thermostat housing.jpg"
-      ],
-      condition: "Used",
-      inStock: true,
-      fastDelivery: true,
-      partNumber: "N/A",
-      brand: "Fiat",
-      warranty: "6 months",
-      engineCode: "323B",
-      compatibility: [
-        "Fiat Punto"
-      ],
-      description: "Complete thermostat housing for Fiat Punto models. This cooling system component includes the thermostat and housing assembly, ensuring proper engine temperature control and coolant flow regulation.",
-      features: [
-        "Complete assembly",
-        "Temperature control",
-        "Coolant flow regulation",
-        "Engine Code: 323B",
-        "Ready to install"
-      ]
-    },
-    {
-      id: 8,
-      name: "Shock Saddle - Fiat Palio/Seina/Strada",
-      price: "R850.00",
-      images: [
-        "/parts/Shock saddle (2).jpg",
-        "/parts/Shock saddle (2).jpg"
-      ],
-      condition: "Used",
-      inStock: true,
-      fastDelivery: true,
-      partNumber: "N/A",
-      brand: "Fiat",
-      warranty: "6 months",
-      engineCode: "178D/178F/178D",
-      compatibility: [
-        "Fiat Palio",
-        "Fiat Seina",
-        "Fiat Strada"
-      ],
-      description: "Shock saddle for Fiat Palio, Seina, and Strada models. This suspension component provides proper mounting for shock absorbers and contributes to vehicle stability and ride comfort. Compatible with multiple engine codes.",
-      features: [
-        "Multi-model compatibility",
-        "Suspension mounting",
-        "Vehicle stability",
-        "Engine Code: 178D/178F/178D",
-        "Ride comfort"
-      ]
-    }
-  ];
-
-  const partId = parseInt(id || "1", 10);
-  const part = mockParts.find((p) => p.id === partId) ?? mockParts[0];
 
   const handleAddToCart = () => {
+    if (!part) return;
+    
     for (let i = 0; i < quantity; i++) {
       addItem({
         id: part.id,
         name: part.name,
         price: part.price,
-        image: part.images[0],
-        condition: part.condition
+        image: part.images[0] || "/placeholder.svg",
+        condition: part.condition,
       });
     }
 
     toast({
-      title: "Added to cart!",
-      description: `${quantity} x ${part.name} added to your cart.`,
+      title: "Added to cart",
+      description: `${quantity}x ${part.name} added successfully`,
     });
   };
+
+  const nextImage = () => {
+    if (part && part.images.length > 0) {
+      setSelectedImageIndex((prev) => (prev + 1) % part.images.length);
+    }
+  };
+
+  const prevImage = () => {
+    if (part && part.images.length > 0) {
+      setSelectedImageIndex((prev) => (prev - 1 + part.images.length) % part.images.length);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen">
+        <Header />
+        <main className="pt-16">
+          <div className="container mx-auto px-4 py-12">
+            <div className="flex justify-center items-center py-24">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error || !part) {
+    return (
+      <div className="min-h-screen">
+        <Header />
+        <main className="pt-16">
+          <div className="container mx-auto px-4 py-12">
+            <div className="text-center py-24">
+              <h1 className="text-2xl font-bold mb-4">Part Not Found</h1>
+              <p className="text-muted-foreground mb-6">The part you're looking for doesn't exist.</p>
+              <Link to="/car-parts">
+                <Button>
+                  <ArrowLeft className="h-4 w-4 mr-2" />
+                  Back to Parts
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen">
@@ -278,194 +108,251 @@ const PartDetails = () => {
         <div className="container mx-auto px-4 py-8">
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
-            <Link to="/parts" className="hover:text-primary">Car Parts</Link>
+            <Link to="/" className="hover:text-primary">Home</Link>
+            <span>/</span>
+            <Link to="/car-parts" className="hover:text-primary">Parts</Link>
             <span>/</span>
             <span className="text-foreground">{part.name}</span>
           </div>
 
-          {/* Back Button */}
-          <Link to="/parts" className="inline-flex items-center gap-2 text-primary hover:text-primary/80 mb-6">
-            <ArrowLeft className="h-4 w-4" />
-            Back to Parts
-          </Link>
-
-          <div className="grid lg:grid-cols-2 gap-8 mb-12">
+          <div className="grid lg:grid-cols-2 gap-8">
             {/* Image Gallery */}
             <div className="space-y-4">
-              <div className="aspect-square overflow-hidden rounded-lg border">
+              <div className="relative aspect-square bg-muted rounded-lg overflow-hidden">
                 <img
-                  src={part.images[selectedImage]}
+                  src={part.images[selectedImageIndex] || "/placeholder.svg"}
                   alt={part.name}
                   className="w-full h-full object-cover"
                 />
+                {part.images.length > 1 && (
+                  <>
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      className="absolute left-2 top-1/2 -translate-y-1/2"
+                      onClick={prevImage}
+                    >
+                      <ChevronLeft className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      className="absolute right-2 top-1/2 -translate-y-1/2"
+                      onClick={nextImage}
+                    >
+                      <ChevronRight className="h-4 w-4" />
+                    </Button>
+                  </>
+                )}
               </div>
-              <div className="grid grid-cols-3 gap-2">
-                {part.images.map((image, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setSelectedImage(index)}
-                    className={`aspect-square rounded-md overflow-hidden border-2 transition-colors ${
-                      selectedImage === index ? 'border-primary' : 'border-border'
-                    }`}
-                  >
-                    <img
-                      src={image}
-                      alt={`${part.name} view ${index + 1}`}
-                      className="w-full h-full object-cover"
-                    />
-                  </button>
-                ))}
-              </div>
+
+              {/* Thumbnail Gallery */}
+              {part.images.length > 1 && (
+                <div className="flex gap-2 overflow-x-auto">
+                  {part.images.map((image, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setSelectedImageIndex(index)}
+                      className={`flex-shrink-0 w-20 h-20 rounded-md overflow-hidden border-2 transition-colors ${
+                        index === selectedImageIndex ? 'border-primary' : 'border-transparent'
+                      }`}
+                    >
+                      <img
+                        src={image}
+                        alt={`${part.name} ${index + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Product Info */}
             <div className="space-y-6">
               <div>
-                <div className="flex items-start justify-between mb-2">
-                  <h1 className="text-3xl font-bold text-foreground">{part.name}</h1>
-                  <div className="flex gap-2">
-                    <Button variant="outline" size="icon">
-                      <Heart className="h-4 w-4" />
-                    </Button>
-                    <Button variant="outline" size="icon">
-                      <Share2 className="h-4 w-4" />
-                    </Button>
-                  </div>
+                <div className="flex items-center gap-2 mb-2">
+                  <Badge variant="outline" className="capitalize">{part.condition}</Badge>
+                  {part.fast_delivery && (
+                    <Badge variant="outline" className="text-green-600">
+                      <Truck className="h-3 w-3 mr-1" /> Fast Delivery
+                    </Badge>
+                  )}
                 </div>
+                <h1 className="text-3xl font-bold">{part.name}</h1>
+                {part.part_number && (
+                  <p className="text-muted-foreground mt-1">Part #: {part.part_number}</p>
+                )}
+              </div>
 
-                {/* reviews/ratings removed */}
-                <div className="mb-4">
-                  <Badge variant={part.condition === 'New' ? 'default' : 'secondary'}>
-                    {part.condition}
+              <div className="flex items-baseline gap-3">
+                <span className="text-4xl font-bold text-primary">
+                  R{part.price.toLocaleString()}
+                </span>
+                {part.original_price && (
+                  <span className="text-xl text-muted-foreground line-through">
+                    R{part.original_price.toLocaleString()}
+                  </span>
+                )}
+                {part.original_price && (
+                  <Badge variant="destructive">
+                    Save R{(part.original_price - part.price).toLocaleString()}
                   </Badge>
-                </div>
+                )}
+              </div>
 
-                <div className="flex items-center gap-3 mb-6">
-                  <span className="text-3xl font-bold text-foreground">{part.price}</span>
+              <Badge variant={part.in_stock ? "default" : "secondary"} className="text-sm">
+                {part.in_stock ? `In Stock (${part.stock_quantity} available)` : "Out of Stock"}
+              </Badge>
+
+              {part.description && (
+                <p className="text-muted-foreground">{part.description}</p>
+              )}
+
+              {/* Quantity Selector */}
+              <div className="flex items-center gap-4">
+                <span className="font-medium">Quantity:</span>
+                <div className="flex items-center border rounded-md">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                    disabled={quantity <= 1}
+                  >
+                    <Minus className="h-4 w-4" />
+                  </Button>
+                  <span className="px-4 py-2 font-medium">{quantity}</span>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setQuantity(Math.min(part.stock_quantity, quantity + 1))}
+                    disabled={quantity >= part.stock_quantity}
+                  >
+                    <Plus className="h-4 w-4" />
+                  </Button>
                 </div>
               </div>
 
-              {/* Key Features */}
-              <div className="grid grid-cols-3 gap-4 py-4 border-y">
-                <div className="text-center">
-                  <Truck className="h-6 w-6 text-primary mx-auto mb-2" />
-                  <p className="text-sm font-medium">Fast Delivery</p>
-                  <p className="text-xs text-muted-foreground">Next day available</p>
-                </div>
-                <div className="text-center">
-                  <Shield className="h-6 w-6 text-primary mx-auto mb-2" />
-                  <p className="text-sm font-medium">{part.warranty}</p>
-                  <p className="text-xs text-muted-foreground">Warranty</p>
-                </div>
-                <div className="text-center">
-                  <RotateCcw className="h-6 w-6 text-primary mx-auto mb-2" />
-                  <p className="text-sm font-medium">30 Day</p>
-                  <p className="text-xs text-muted-foreground">Returns</p>
-                </div>
-              </div>
+              {/* Add to Cart */}
+              <Button
+                size="lg"
+                className="w-full"
+                disabled={!part.in_stock}
+                onClick={handleAddToCart}
+              >
+                <ShoppingCart className="h-5 w-5 mr-2" />
+                Add to Cart - R{(part.price * quantity).toLocaleString()}
+              </Button>
 
-              {/* Quantity & Add to Cart */}
-              <div className="space-y-4">
-                <div>
-                  <label className="text-sm font-medium mb-2 block">Quantity</label>
-                  <div className="flex items-center gap-3">
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    >
-                      <Minus className="h-4 w-4" />
-                    </Button>
-                    <span className="text-lg font-medium min-w-[2rem] text-center">{quantity}</span>
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      onClick={() => setQuantity(quantity + 1)}
-                    >
-                      <Plus className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-
-                <Button
-                  className="w-full"
-                  size="lg"
-                  onClick={handleAddToCart}
-                  disabled={!part.inStock}
-                >
-                  <ShoppingCart className="h-5 w-5 mr-2" />
-                  {part.inStock ? `Add to Cart - R${(parseFloat(part.price.replace('R', '')) * quantity).toFixed(2)}` : 'Out of Stock'}
+              {/* Contact Options */}
+              <div className="flex gap-3">
+                <Button variant="outline" className="flex-1" asChild>
+                  <a href="tel:+27820688246">
+                    <Phone className="h-4 w-4 mr-2" />
+                    Call Us
+                  </a>
                 </Button>
-
-                <Badge variant={part.inStock ? 'default' : 'secondary'} className="w-full justify-center py-2">
-                  {part.inStock ? '✓ In Stock - Ready to Ship' : 'Out of Stock'}
-                </Badge>
+                <Button variant="outline" className="flex-1" asChild>
+                  <a href={`https://wa.me/27820688246?text=Hi, I'm interested in ${part.name} (${part.part_number})`} target="_blank" rel="noopener noreferrer">
+                    <MessageCircle className="h-4 w-4 mr-2" />
+                    WhatsApp
+                  </a>
+                </Button>
               </div>
 
-              {/* Part Details */}
-              <Card>
-                <CardContent className="p-4">
-                  <h3 className="font-semibold mb-3">Part Details</h3>
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Part Number:</span>
-                      <span className="font-medium">{part.partNumber}</span>
+              {/* Features */}
+              <div className="grid grid-cols-2 gap-4">
+                <Card>
+                  <CardContent className="flex items-center gap-3 p-4">
+                    <Truck className="h-8 w-8 text-primary" />
+                    <div>
+                      <p className="font-medium">Nationwide Delivery</p>
+                      <p className="text-sm text-muted-foreground">Delivery available</p>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Brand:</span>
-                      <span className="font-medium">{part.brand}</span>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardContent className="flex items-center gap-3 p-4">
+                    <Shield className="h-8 w-8 text-primary" />
+                    <div>
+                      <p className="font-medium">Quality Tested</p>
+                      <p className="text-sm text-muted-foreground">All parts verified</p>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Condition:</span>
-                      <span className="font-medium">{part.condition}</span>
-                    </div>
-                    {part.engineCode && (
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">Engine Code:</span>
-                        <span className="font-medium">{part.engineCode}</span>
-                      </div>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
+                  </CardContent>
+                </Card>
+              </div>
             </div>
           </div>
 
-          {/* Detailed Information (specifications removed) */}
-          <div className="space-y-8">
-            <Card>
-              <CardContent className="p-6">
-                <h2 className="text-2xl font-bold mb-4">Description</h2>
-                <p className="text-muted-foreground leading-relaxed">{part.description}</p>
-              </CardContent>
-            </Card>
+          {/* Product Details Tabs */}
+          <div className="mt-12">
+            <Tabs defaultValue="description">
+              <TabsList>
+                <TabsTrigger value="description">Description</TabsTrigger>
+                <TabsTrigger value="specifications">Specifications</TabsTrigger>
+                <TabsTrigger value="shipping">Shipping</TabsTrigger>
+              </TabsList>
+              <TabsContent value="description" className="mt-4">
+                <Card>
+                  <CardContent className="p-6">
+                    <h3 className="font-semibold mb-3">Product Description</h3>
+                    <p className="text-muted-foreground">
+                      {part.description || "No description available for this part."}
+                    </p>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+              <TabsContent value="specifications" className="mt-4">
+                <Card>
+                  <CardContent className="p-6">
+                    <h3 className="font-semibold mb-3">Specifications</h3>
+                    <dl className="grid grid-cols-2 gap-4">
+                      <div>
+                        <dt className="text-sm text-muted-foreground">Part Number</dt>
+                        <dd className="font-medium">{part.part_number || "N/A"}</dd>
+                      </div>
+                      <div>
+                        <dt className="text-sm text-muted-foreground">Condition</dt>
+                        <dd className="font-medium capitalize">{part.condition}</dd>
+                      </div>
+                      {part.category && (
+                        <div>
+                          <dt className="text-sm text-muted-foreground">Category</dt>
+                          <dd className="font-medium">{part.category.name}</dd>
+                        </div>
+                      )}
+                      <div>
+                        <dt className="text-sm text-muted-foreground">Availability</dt>
+                        <dd className="font-medium">{part.stock_quantity} in stock</dd>
+                      </div>
+                    </dl>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+              <TabsContent value="shipping" className="mt-4">
+                <Card>
+                  <CardContent className="p-6">
+                    <h3 className="font-semibold mb-3">Shipping Information</h3>
+                    <ul className="space-y-2 text-muted-foreground">
+                      <li>• Nationwide delivery available</li>
+                      <li>• Local collection in Durban</li>
+                      <li>• Shipping costs calculated at checkout</li>
+                      {part.fast_delivery && <li>• Fast delivery available for this item</li>}
+                    </ul>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+            </Tabs>
+          </div>
 
-            <Card>
-              <CardContent className="p-6">
-                <h2 className="text-2xl font-bold mb-4">Key Features</h2>
-                <ul className="space-y-2">
-                  {part.features.map((feature, index) => (
-                    <li key={index} className="flex items-start gap-3">
-                      <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0" />
-                      <span className="text-muted-foreground">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-6">
-                <h2 className="text-2xl font-bold mb-4">Compatibility</h2>
-                <div className="space-y-2">
-                  {part.compatibility.map((model, index) => (
-                    <Badge key={index} variant="outline" className="mr-2 mb-2">
-                      {model}
-                    </Badge>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+          {/* Back Button */}
+          <div className="mt-8">
+            <Link to="/car-parts">
+              <Button variant="outline">
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Back to All Parts
+              </Button>
+            </Link>
           </div>
         </div>
       </main>
