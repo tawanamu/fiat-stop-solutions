@@ -16,13 +16,12 @@ import {
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
-  const { getItemCount } = useCart();
-  const { user, logout, isAuthenticated } = useAuth();
-  const itemCount = getItemCount();
+  const { totalItems } = useCart();
+  const { user, profile, logout, isAuthenticated } = useAuth();
 
   const navigation = [
     { name: "Home", href: "/" },
-    { name: "Car Parts", href: "/parts" },
+    { name: "Car Parts", href: "/car-parts" },
     {
       name: "Cars Sells",
       href: "#",
@@ -33,6 +32,10 @@ const Header = () => {
     },
     { name: "Workshop & Electrical", href: "/workshop" }
   ];
+
+  const displayName = profile?.first_name && profile?.last_name 
+    ? `${profile.first_name} ${profile.last_name}` 
+    : user?.email?.split('@')[0] || 'User';
 
   return (
     <>
@@ -70,7 +73,7 @@ const Header = () => {
             {/* Logo */}
             <div className="flex-shrink-0">
               <Link to="/" className="text-2xl font-bold text-primary hover:text-primary/80 transition-colors">
-                One Stop Fiate Spares
+                One Stop Fiat Spares
               </Link>
             </div>
 
@@ -136,7 +139,7 @@ const Header = () => {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="w-56" align="end" forceMount>
                     <div className="flex flex-col space-y-1 p-2">
-                      <p className="text-sm font-medium leading-none">{user?.firstName} {user?.lastName}</p>
+                      <p className="text-sm font-medium leading-none">{displayName}</p>
                       <p className="text-xs leading-none text-muted-foreground">
                         {user?.email}
                       </p>
@@ -152,12 +155,6 @@ const Header = () => {
                       <Link to="/orders" className="cursor-pointer">
                         <ShoppingCart className="mr-2 h-4 w-4" />
                         <span>Orders</span>
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                      <Link to="/settings" className="cursor-pointer">
-                        <Settings className="mr-2 h-4 w-4" />
-                        <span>Settings</span>
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
@@ -182,12 +179,12 @@ const Header = () => {
               <Link to="/cart">
                 <Button variant="ghost" size="icon" className="relative">
                   <ShoppingCart className="h-5 w-5" />
-                  {itemCount > 0 && (
+                  {totalItems > 0 && (
                     <Badge
                       variant="destructive"
                       className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center text-xs p-0"
                     >
-                      {itemCount}
+                      {totalItems}
                     </Badge>
                   )}
                 </Button>
@@ -254,7 +251,7 @@ const Header = () => {
                       <div className="flex items-center space-x-2 p-2 bg-muted rounded-md">
                         <User className="h-4 w-4" />
                         <div>
-                          <p className="text-sm font-medium">{user?.firstName} {user?.lastName}</p>
+                          <p className="text-sm font-medium">{displayName}</p>
                           <p className="text-xs text-muted-foreground">{user?.email}</p>
                         </div>
                       </div>
@@ -272,13 +269,6 @@ const Header = () => {
                           onClick={() => setIsMenuOpen(false)}
                         >
                           Orders
-                        </Link>
-                        <Link
-                          to="/settings"
-                          className="block text-foreground hover:text-primary transition-colors duration-200 font-medium"
-                          onClick={() => setIsMenuOpen(false)}
-                        >
-                          Settings
                         </Link>
                         <button
                           onClick={() => {

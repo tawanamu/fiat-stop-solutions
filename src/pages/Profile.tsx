@@ -6,13 +6,18 @@ import { User, Mail, Phone, MapPin, Calendar, Edit } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ProtectedRoute from '@/components/ProtectedRoute';
+import { Link } from 'react-router-dom';
 
 const Profile = () => {
-  const { user, logout } = useAuth();
+  const { user, profile, logout } = useAuth();
 
   if (!user) {
     return null;
   }
+
+  const displayName = profile?.first_name && profile?.last_name 
+    ? `${profile.first_name} ${profile.last_name}` 
+    : 'Not set';
 
   return (
     <ProtectedRoute>
@@ -61,39 +66,41 @@ const Profile = () => {
                         <User className="h-4 w-4 text-muted-foreground" />
                         <div>
                           <p className="text-sm text-muted-foreground">Full Name</p>
-                          <p className="font-medium">{user.firstName} {user.lastName}</p>
+                          <p className="font-medium">{displayName}</p>
                         </div>
                       </div>
 
-                      {user.phone && (
+                      {profile?.phone && (
                         <div className="flex items-center gap-3">
                           <Phone className="h-4 w-4 text-muted-foreground" />
                           <div>
                             <p className="text-sm text-muted-foreground">Phone</p>
-                            <p className="font-medium">{user.phone}</p>
+                            <p className="font-medium">{profile.phone}</p>
                           </div>
                         </div>
                       )}
 
-                      {user.address && (
+                      {profile?.address && (
                         <div className="flex items-center gap-3">
                           <MapPin className="h-4 w-4 text-muted-foreground" />
                           <div>
                             <p className="text-sm text-muted-foreground">Address</p>
-                            <p className="font-medium">{user.address}</p>
+                            <p className="font-medium">{profile.address}</p>
                           </div>
                         </div>
                       )}
 
-                      <div className="flex items-center gap-3">
-                        <Calendar className="h-4 w-4 text-muted-foreground" />
-                        <div>
-                          <p className="text-sm text-muted-foreground">Member Since</p>
-                          <p className="font-medium">
-                            {new Date(user.createdAt).toLocaleDateString()}
-                          </p>
+                      {profile?.created_at && (
+                        <div className="flex items-center gap-3">
+                          <Calendar className="h-4 w-4 text-muted-foreground" />
+                          <div>
+                            <p className="text-sm text-muted-foreground">Member Since</p>
+                            <p className="font-medium">
+                              {new Date(profile.created_at).toLocaleDateString()}
+                            </p>
+                          </div>
                         </div>
-                      </div>
+                      )}
 
                       <div className="pt-4">
                         <Button className="w-full">
@@ -122,19 +129,13 @@ const Profile = () => {
                         <span className="text-sm text-muted-foreground">Email Verified</span>
                         <Badge variant="default">Verified</Badge>
                       </div>
-                      
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm text-muted-foreground">Two-Factor Auth</span>
-                        <Badge variant="secondary">Not Enabled</Badge>
-                      </div>
 
                       <div className="pt-4 space-y-2">
-                        <Button variant="outline" className="w-full">
-                          Change Password
-                        </Button>
-                        <Button variant="outline" className="w-full">
-                          Enable 2FA
-                        </Button>
+                        <Link to="/forgot-password">
+                          <Button variant="outline" className="w-full">
+                            Change Password
+                          </Button>
+                        </Link>
                         <Button 
                           variant="destructive" 
                           className="w-full"
@@ -147,18 +148,21 @@ const Profile = () => {
                   </Card>
                 </div>
 
-                {/* Recent Activity */}
+                {/* Recent Orders */}
                 <Card className="mt-8">
                   <CardHeader>
-                    <CardTitle>Recent Activity</CardTitle>
+                    <CardTitle>Recent Orders</CardTitle>
                     <CardDescription>
-                      Your recent account activity
+                      Your recent order history
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="text-center py-8 text-muted-foreground">
-                      <p>No recent activity to display</p>
-                      <p className="text-sm">Your activity will appear here once you start using the platform.</p>
+                      <p>No orders yet</p>
+                      <p className="text-sm">Your orders will appear here once you make a purchase.</p>
+                      <Link to="/car-parts">
+                        <Button className="mt-4">Browse Parts</Button>
+                      </Link>
                     </div>
                   </CardContent>
                 </Card>
@@ -174,4 +178,3 @@ const Profile = () => {
 };
 
 export default Profile;
-

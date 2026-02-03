@@ -37,20 +37,16 @@ const Login = () => {
       return;
     }
 
-    try {
-      const success = await login(email, password);
-      
-      if (success) {
-        toast({
-          title: "Welcome back!",
-          description: "You have successfully logged in.",
-        });
-        navigate(from, { replace: true });
-      } else {
-        setError('Invalid email or password');
-      }
-    } catch (err) {
-      setError('An error occurred during login. Please try again.');
+    const result = await login(email, password);
+    
+    if (result.success) {
+      toast({
+        title: "Welcome back!",
+        description: "You have successfully logged in.",
+      });
+      navigate(from, { replace: true });
+    } else {
+      setError(result.error || 'Invalid email or password');
     }
   };
 
@@ -135,17 +131,7 @@ const Login = () => {
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-2">
-                        <input
-                          id="remember"
-                          type="checkbox"
-                          className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
-                        />
-                        <Label htmlFor="remember" className="text-sm">
-                          Remember me
-                        </Label>
-                      </div>
+                    <div className="flex items-center justify-end">
                       <Link
                         to="/forgot-password"
                         className="text-sm text-primary hover:text-primary/80 transition-colors"
@@ -205,4 +191,3 @@ const Login = () => {
 };
 
 export default Login;
-

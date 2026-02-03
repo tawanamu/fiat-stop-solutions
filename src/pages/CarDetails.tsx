@@ -1,76 +1,65 @@
-import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { useState } from "react";
 import {
   ArrowLeft,
   Phone,
-  MapPin,
   Calendar,
   Gauge,
   Fuel,
   Cog,
-  Heart,
-  Share2,
   CheckCircle,
-  User,
-  Clock,
-  Maximize2,
   X,
   MessageCircle,
 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { sanityClient } from "@/lib/sanityClient";
-import urlFor from "@/lib/sanityImage";
+
+// Mock car data - in a real app this would come from the database
+const mockCars = [
+  {
+    slug: "fiat-palio-2018",
+    title: "Fiat Palio",
+    price: 85000,
+    year: 2018,
+    mileage: "120,000 km",
+    condition: "Good",
+    fuelType: "Petrol",
+    transmission: "Manual",
+    color: "Silver",
+    location: "Durban",
+    description: "Well-maintained Fiat Palio with full service history. Perfect for city driving.",
+    images: ["/cars/pialo_00.jpg", "/cars/pialo_01.jpg", "/cars/pialo_02.jpg", "/cars/pialo_03.jpg", "/cars/pialo_04.jpg"],
+    features: ["Air Conditioning", "Power Steering", "Electric Windows", "Central Locking", "Radio/CD Player"],
+    contact: { name: "One Stop Fiat Spares", phone: "27820688246", location: "119 Houghton Rd, Clairwood, Durban" }
+  },
+  {
+    slug: "fiat-strada-2019",
+    title: "Fiat Strada",
+    price: 145000,
+    year: 2019,
+    mileage: "85,000 km",
+    condition: "Very Good",
+    fuelType: "Diesel",
+    transmission: "Manual",
+    color: "White",
+    location: "Durban",
+    description: "Reliable Fiat Strada pickup. Great for work and personal use.",
+    images: ["/cars/strada_00.jpg", "/cars/strada_01.jpg", "/cars/strada_02.jpg", "/cars/strada_03.jpg", "/cars/strada_04.jpg", "/cars/strada_05.jpg"],
+    features: ["Air Conditioning", "Power Steering", "Load Bay Cover", "Bull Bar", "Tow Bar"],
+    contact: { name: "One Stop Fiat Spares", phone: "27820688246", location: "119 Houghton Rd, Clairwood, Durban" }
+  }
+];
 
 const CarDetails = () => {
   const { slug } = useParams();
-  const [car, setCar] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [isFullscreenOpen, setIsFullscreenOpen] = useState(false);
 
-  useEffect(() => {
-    const fetchCar = async () => {
-      try {
-        const data = await sanityClient.fetch(
-          `
-          *[_type == "car" && slug.current == $slug][0]{
-            title,
-            price,
-            year,
-            mileage,
-            condition,
-            fuelType,
-            transmission,
-            color,
-            location,
-            description,
-            images,
-            features,
-            repairsNeeded,
-            notes,
-            specifications,
-            contact,
-            history
-          }
-        `,
-          { slug }
-        );
-
-        setCar(data);
-      } catch (err) {
-        console.error("Failed to load car:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCar();
-  }, [slug]);
+  const car = mockCars.find(c => c.slug === slug);
 
   const getConditionColor = (condition: string) => {
     switch (condition) {
@@ -86,16 +75,6 @@ const CarDetails = () => {
         return "bg-gray-100 text-gray-800";
     }
   };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen">
-        <Header />
-        <main className="pt-16 text-center py-12">Loading car details…</main>
-        <Footer />
-      </div>
-    );
-  }
 
   if (!car) {
     return (
@@ -140,7 +119,7 @@ const CarDetails = () => {
               <Card>
                 <div className="relative aspect-[4/3]">
                   <img
-                    src={urlFor(car.images[selectedImageIndex]).width(1200).url()}
+                    src={car.images[selectedImageIndex]}
                     alt={car.title}
                     className="w-full h-full object-cover cursor-pointer"
                     onClick={() => setIsFullscreenOpen(true)}
@@ -156,13 +135,14 @@ const CarDetails = () => {
 
               {/* Gallery */}
               <div className="grid grid-cols-4 gap-2">
-                {car.images.map((img: any, i: number) => (
+                {car.images.map((img, i) => (
                   <img
                     key={i}
-                    src={urlFor(img).width(300).url()}
-                    className={`h-20 w-full object-cover cursor-pointer border-2 ${selectedImageIndex === i ? "border-primary" : "border-transparent"
+                    src={img}
+                    className={`h-20 w-full object-cover cursor-pointer border-2 rounded ${selectedImageIndex === i ? "border-primary" : "border-transparent"
                       }`}
                     onClick={() => setSelectedImageIndex(i)}
+                    alt={`${car.title} view ${i + 1}`}
                   />
                 ))}
               </div>
@@ -180,7 +160,7 @@ const CarDetails = () => {
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                     <div className="text-center">
                       <Gauge className="mx-auto mb-1" />
-                      {car.mileage || "N/A"}
+                      {car.mileage}
                     </div>
                     <div className="text-center">
                       <Fuel className="mx-auto mb-1" />
@@ -208,7 +188,7 @@ const CarDetails = () => {
                   <CardContent className="p-6">
                     <h3 className="font-semibold mb-4">Features</h3>
                     <div className="grid md:grid-cols-2 gap-2">
-                      {car.features.map((f: string, i: number) => (
+                      {car.features.map((f, i) => (
                         <div key={i} className="flex items-center">
                           <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
                           {f}
@@ -228,31 +208,34 @@ const CarDetails = () => {
                     R{car.price.toLocaleString()}
                   </p>
 
-                  <Button className="w-full mb-3">
-                    <Phone className="mr-2 h-4 w-4" />
-                    Call Seller
+                  <Button className="w-full mb-3" asChild>
+                    <a href={`tel:+${car.contact.phone}`}>
+                      <Phone className="mr-2 h-4 w-4" />
+                      Call Seller
+                    </a>
                   </Button>
 
                   <Button
                     variant="outline"
                     className="w-full"
-                    onClick={() => {
-                      const msg = `Hi, I'm interested in the ${car.title}`;
-                      window.open(
-                        `https://wa.me/${car.contact.phone}?text=${encodeURIComponent(msg)}`
-                      );
-                    }}
+                    asChild
                   >
-                    <MessageCircle className="mr-2 h-4 w-4" />
-                    WhatsApp
+                    <a 
+                      href={`https://wa.me/${car.contact.phone}?text=${encodeURIComponent(`Hi, I'm interested in the ${car.year} ${car.title}`)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <MessageCircle className="mr-2 h-4 w-4" />
+                      WhatsApp
+                    </a>
                   </Button>
 
                   <Separator className="my-6" />
 
                   <h4 className="font-semibold mb-2">Seller</h4>
                   <p>{car.contact.name}</p>
-                  <p>{car.contact.phone}</p>
-                  <p>{car.contact.location}</p>
+                  <p>+{car.contact.phone}</p>
+                  <p className="text-sm text-muted-foreground">{car.contact.location}</p>
                 </CardContent>
               </Card>
             </div>
@@ -266,8 +249,9 @@ const CarDetails = () => {
       {isFullscreenOpen && (
         <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center">
           <img
-            src={urlFor(car.images[selectedImageIndex]).url()}
+            src={car.images[selectedImageIndex]}
             className="max-w-full max-h-full"
+            alt={car.title}
           />
           <Button
             variant="secondary"

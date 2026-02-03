@@ -8,10 +8,10 @@ import { useCart } from "@/contexts/CartContext";
 import { useToast } from "@/hooks/use-toast";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Lock, ArrowRight } from "lucide-react";
+import { Lock } from "lucide-react";
 
 export default function Checkout() {
-  const { state, clearCart } = useCart();
+  const { items, clearCart, totalPrice, totalItems } = useCart();
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -31,7 +31,7 @@ export default function Checkout() {
     cvv: "",
   });
 
-  const subtotal = state.total;
+  const subtotal = totalPrice;
   const shippingCost = subtotal > 500 ? 0 : 59.99;
   const total = subtotal + shippingCost;
 
@@ -48,6 +48,23 @@ export default function Checkout() {
     toast({ title: "Order placed", description: "Thank you — your order has been received." });
     navigate("/"); // redirect to home or order confirmation page
   };
+
+  if (items.length === 0) {
+    return (
+      <div className="min-h-screen">
+        <Header />
+        <main className="pt-16">
+          <div className="container mx-auto px-4 py-16 text-center">
+            <h1 className="text-2xl font-bold mb-4">Your cart is empty</h1>
+            <Link to="/car-parts">
+              <Button>Browse Parts</Button>
+            </Link>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen">
@@ -136,7 +153,7 @@ export default function Checkout() {
 
                 <Button type="submit" className="w-full" size="lg">
                   <Lock className="h-4 w-4 mr-2" />
-                  Place Order - R{total.toFixed(2)}
+                  Place Order - R{total.toLocaleString()}
                 </Button>
               </div>
             </form>
@@ -146,13 +163,13 @@ export default function Checkout() {
                 <CardContent className="p-6">
                   <h2 className="text-lg font-semibold mb-4">Order Summary</h2>
                   <div className="space-y-3">
-                    {state.items.map((it) => (
+                    {items.map((it) => (
                       <div key={it.id} className="flex items-center justify-between">
                         <div className="min-w-0">
                           <div className="font-medium truncate">{it.name}</div>
-                          <div className="text-sm text-muted-foreground">{it.quantity} x {it.price}</div>
+                          <div className="text-sm text-muted-foreground">{it.quantity} x R{it.price.toLocaleString()}</div>
                         </div>
-                        <div className="font-semibold">R{(parseFloat(it.price.replace('R', '')) * it.quantity).toFixed(2)}</div>
+                        <div className="font-semibold">R{(it.price * it.quantity).toLocaleString()}</div>
                       </div>
                     ))}
 
@@ -160,7 +177,7 @@ export default function Checkout() {
 
                     <div className="flex justify-between">
                       <span className="text-muted-foreground">Subtotal</span>
-                      <span>R{subtotal.toFixed(2)}</span>
+                      <span>R{subtotal.toLocaleString()}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-muted-foreground">Shipping</span>
@@ -171,7 +188,7 @@ export default function Checkout() {
 
                     <div className="flex justify-between text-lg font-bold">
                       <span>Total</span>
-                      <span>R{total.toFixed(2)}</span>
+                      <span>R{total.toLocaleString()}</span>
                     </div>
                   </div>
                 </CardContent>

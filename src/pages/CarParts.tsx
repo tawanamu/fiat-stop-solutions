@@ -15,8 +15,7 @@ import {
 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { useParts } from "@/hooks/useSanityData";
-import urlFor from "@/lib/sanityImage";
+import { useParts, Part } from "@/hooks/useParts";
 
 const CarParts = () => {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -25,27 +24,25 @@ const CarParts = () => {
   const { toast } = useToast();
   const { parts, loading } = useParts();
 
-  const handleAddToCart = (part: any) => {
+  const handleAddToCart = (part: Part) => {
     addItem({
-      id: part._id,
-      name: part.title,
+      id: part.id,
+      name: part.name,
       price: part.price,
-      image: part.images?.length
-        ? urlFor(part.images[0]).width(400).url()
-        : "/api/placeholder/300/200",
+      image: part.images[0] || "/placeholder.svg",
       condition: part.condition
     });
 
     toast({
       title: "Added to cart",
-      description: `${part.title} added successfully`,
+      description: `${part.name} added successfully`,
     });
   };
 
   const filtered = parts.filter(p =>
     !searchTerm ||
-    p.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    p.partNumber?.toLowerCase().includes(searchTerm.toLowerCase())
+    p.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    p.part_number?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -54,11 +51,14 @@ const CarParts = () => {
 
       <main className="pt-16">
         <section className="py-12 container mx-auto px-4">
+          <h1 className="text-3xl font-bold mb-8">Second-Hand Car Parts</h1>
+          
           <div className="flex gap-4 mb-6">
             <Input
               placeholder="Search parts or part numbers"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
+              className="flex-1"
             />
             <Button onClick={() => { }}>
               <Search className="h-4 w-4" />
@@ -80,42 +80,60 @@ const CarParts = () => {
           </div>
 
           {loading ? (
-            <p className="text-center">Loading parts…</p>
+            <div className="text-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+              <p className="mt-4 text-muted-foreground">Loading parts…</p>
+            </div>
+          ) : filtered.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground">No parts found matching your search.</p>
+            </div>
           ) : (
-            <div className={`grid gap-6 ${viewMode === 'grid' ? 'md:grid-cols-3' : ''}`}>
+            <div className={`grid gap-6 ${viewMode === 'grid' ? 'md:grid-cols-2 lg:grid-cols-3' : ''}`}>
               {filtered.map(part => (
-                <Card key={part._id}>
-                  <Link to={`/parts/${part.slug?.current}`}>
+                <Card key={part.id} className="overflow-hidden">
+                  <Link to={`/parts/${part.slug}`}>
                     <img
-                      src={part.images?.length
-                        ? urlFor(part.images[0]).width(600).height(400).url()
-                        : "/api/placeholder/300/200"}
-                      alt={part.title}
-                      className="w-full h-48 object-cover"
+                      src={part.images[0] || "/placeholder.svg"}
+                      alt={part.name}
+                      className="w-full h-48 object-cover hover:opacity-90 transition-opacity"
                     />
                   </Link>
 
                   <CardContent className="p-4">
-                    <h3 className="font-semibold">{part.title}</h3>
+                    <Link to={`/parts/${part.slug}`}>
+                      <h3 className="font-semibold hover:text-primary transition-colors">{part.name}</h3>
+                    </Link>
 
-                    <div className="flex justify-between my-2">
-                      <span className="font-bold">R{part.price.toLocaleString()}</span>
-                      <Badge variant={part.inStock ? "default" : "secondary"}>
-                        {part.inStock ? "In Stock" : "Out of Stock"}
+                    {part.part_number && (
+                      <p className="text-sm text-muted-foreground">Part #: {part.part_number}</p>
+                    )}
+
+                    <div className="flex justify-between items-center my-2">
+                      <div>
+                        <span className="font-bold text-lg">R{part.price.toLocaleString()}</span>
+                        {part.original_price && (
+                          <span className="text-sm text-muted-foreground line-through ml-2">
+                            R{part.original_price.toLocaleString()}
+                          </span>
+                        )}
+                      </div>
+                      <Badge variant={part.in_stock ? "default" : "secondary"}>
+                        {part.in_stock ? "In Stock" : "Out of Stock"}
                       </Badge>
                     </div>
 
-                    <div className="flex gap-2 mb-2">
-                      <Badge>{part.condition}</Badge>
-                      {part.fastDelivery && (
-                        <Badge variant="outline">
+                    <div className="flex gap-2 mb-3">
+                      <Badge variant="outline" className="capitalize">{part.condition}</Badge>
+                      {part.fast_delivery && (
+                        <Badge variant="outline" className="text-green-600">
                           <Truck className="h-3 w-3 mr-1" /> Fast
                         </Badge>
                       )}
                     </div>
 
                     <Button
-                      disabled={!part.inStock}
+                      disabled={!part.in_stock}
                       className="w-full"
                       onClick={() => handleAddToCart(part)}
                     >
