@@ -23,8 +23,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 const PartDetails = () => {
-  const { slug } = useParams<{ slug: string }>();
-  const { part, loading, error } = usePartBySlug(slug);
+  const { id } = useParams<{ id: string }>();
+  const { part, loading, error } = usePartBySlug(id);
   const [quantity, setQuantity] = useState(1);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const { addItem } = useCart();
@@ -86,7 +86,7 @@ const PartDetails = () => {
             <div className="text-center py-24">
               <h1 className="text-2xl font-bold mb-4">Part Not Found</h1>
               <p className="text-muted-foreground mb-6">The part you're looking for doesn't exist.</p>
-              <Link to="/car-parts">
+              <Link to="/parts">
                 <Button>
                   <ArrowLeft className="h-4 w-4 mr-2" />
                   Back to Parts
@@ -110,7 +110,7 @@ const PartDetails = () => {
           <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
             <Link to="/" className="hover:text-primary">Home</Link>
             <span>/</span>
-            <Link to="/car-parts" className="hover:text-primary">Parts</Link>
+            <Link to="/parts" className="hover:text-primary">Parts</Link>
             <span>/</span>
             <span className="text-foreground">{part.name}</span>
           </div>
@@ -347,7 +347,7 @@ const PartDetails = () => {
 
           {/* Back Button */}
           <div className="mt-8">
-            <Link to="/car-parts">
+            <Link to="/parts">
               <Button variant="outline">
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Back to All Parts
