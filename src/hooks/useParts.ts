@@ -56,8 +56,11 @@ export const useParts = () => {
           ...part,
           price: Number(part.price),
           original_price: part.original_price ? Number(part.original_price) : null,
+          condition: part.condition || 'used',
+          in_stock: part.in_stock ?? true,
+          fast_delivery: part.fast_delivery ?? false,
           images: (part.part_images || [])
-            .sort((a: any, b: any) => a.display_order - b.display_order)
+            .sort((a: any, b: any) => (a.display_order ?? 0) - (b.display_order ?? 0))
             .map((img: any) => img.image_url),
         }));
 
