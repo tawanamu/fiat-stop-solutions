@@ -19,8 +19,15 @@ import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import Orders from "./pages/Orders";
 import NotFound from "./pages/NotFound";
-import ScrollToTop from "@/components/ScrollToTop"; // added import
+import ScrollToTop from "@/components/ScrollToTop";
 import Checkout from "./pages/Checkout";
+
+// Admin pages
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminParts from "./pages/admin/AdminParts";
+import AdminCategories from "./pages/admin/AdminCategories";
+import AdminOrders from "./pages/admin/AdminOrders";
+import AdminUsers from "./pages/admin/AdminUsers";
 
 const queryClient = new QueryClient();
 
@@ -32,13 +39,13 @@ const App = () => (
           <Toaster />
           <Sonner />
           <Router>
-            <ScrollToTop /> {/* ensure this is inside Router */}
+            <ScrollToTop />
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/parts" element={<CarParts />} />
               <Route path="/parts/:id" element={<PartDetails />} />
               <Route path="/cart" element={<Cart />} />
-              <Route path="/checkout" element={<Checkout />} /> {/* new checkout route */}
+              <Route path="/checkout" element={<Checkout />} />
               <Route path="/buy-cars" element={<BuyAccidentCars />} />
               <Route path="/second-hand-cars" element={<SecondHandCars />} />
               <Route path="/car-details/:id" element={<CarDetails />} />
@@ -48,6 +55,14 @@ const App = () => (
               <Route path="/register" element={<Register />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/orders" element={<Orders />} />
+              
+              {/* Admin Routes */}
+              <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/admin/parts" element={<AdminParts />} />
+              <Route path="/admin/categories" element={<AdminCategories />} />
+              <Route path="/admin/orders" element={<AdminOrders />} />
+              <Route path="/admin/users" element={<AdminUsers />} />
+              
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Router>
