@@ -455,7 +455,7 @@ const AdminParts = () => {
                     </TableCell>
                     <TableCell className="font-medium">{part.name}</TableCell>
                     <TableCell>{part.part_number || '-'}</TableCell>
-                    <TableCell>€{part.price.toFixed(2)}</TableCell>
+                    <TableCell>R{part.price.toFixed(2)}</TableCell>
                     <TableCell>{part.stock_quantity}</TableCell>
                     <TableCell className="capitalize">{part.condition || '-'}</TableCell>
                     <TableCell>
