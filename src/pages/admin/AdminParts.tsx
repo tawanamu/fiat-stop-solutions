@@ -153,7 +153,6 @@ const AdminParts = () => {
         condition: formData.condition,
         part_number: formData.part_number || null,
         category_id: formData.category_id || null,
-        in_stock: formData.in_stock,
         fast_delivery: formData.fast_delivery,
         slug: formData.name.toLowerCase().replace(/\s+/g, '-'),
       };
