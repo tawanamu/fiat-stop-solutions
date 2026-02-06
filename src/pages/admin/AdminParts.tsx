@@ -28,8 +28,9 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
-import { Plus, Pencil, Trash2, Search, Loader2 } from 'lucide-react';
+import { Plus, Pencil, Trash2, Search, Loader2, ImageIcon } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import PartImageUpload from '@/components/admin/PartImageUpload';
 
 interface Part {
   id: string;
@@ -44,6 +45,7 @@ interface Part {
   in_stock: boolean | null;
   fast_delivery: boolean | null;
   slug: string | null;
+  images?: string[];
 }
 
 interface Category {
@@ -59,6 +61,7 @@ const AdminParts = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingPart, setEditingPart] = useState<Part | null>(null);
   const [saving, setSaving] = useState(false);
+  const [images, setImages] = useState<string[]>([]);
   const { toast } = useToast();
 
   const [formData, setFormData] = useState({
@@ -83,11 +86,23 @@ const AdminParts = () => {
     try {
       const { data, error } = await supabase
         .from('parts')
-        .select('*')
+        .select(`
+          *,
+          part_images(image_url, display_order)
+        `)
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      setParts(data || []);
+      
+      // Transform data to include images array
+      const partsWithImages = (data || []).map((part: any) => ({
+        ...part,
+        images: (part.part_images || [])
+          .sort((a: any, b: any) => (a.display_order ?? 0) - (b.display_order ?? 0))
+          .map((img: any) => img.image_url),
+      }));
+      
+      setParts(partsWithImages);
     } catch (error) {
       console.error('Error fetching parts:', error);
       toast({ title: 'Error', description: 'Failed to fetch parts', variant: 'destructive' });
@@ -119,6 +134,7 @@ const AdminParts = () => {
       in_stock: true,
       fast_delivery: false,
     });
+    setImages([]);
     setEditingPart(null);
   };
 
@@ -136,6 +152,7 @@ const AdminParts = () => {
       in_stock: part.in_stock ?? true,
       fast_delivery: part.fast_delivery ?? false,
     });
+    setImages(part.images || []);
     setIsDialogOpen(true);
   };
 
@@ -157,19 +174,42 @@ const AdminParts = () => {
         slug: formData.name.toLowerCase().replace(/\s+/g, '-'),
       };
 
+      let partId = editingPart?.id;
+
       if (editingPart) {
         const { error } = await supabase
           .from('parts')
           .update(partData)
           .eq('id', editingPart.id);
         if (error) throw error;
-        toast({ title: 'Success', description: 'Part updated successfully' });
       } else {
-        const { error } = await supabase.from('parts').insert([partData]);
+        const { data, error } = await supabase
+          .from('parts')
+          .insert([partData])
+          .select('id')
+          .single();
         if (error) throw error;
-        toast({ title: 'Success', description: 'Part created successfully' });
+        partId = data.id;
       }
 
+      // Update images
+      if (partId) {
+        // Delete existing images
+        await supabase.from('part_images').delete().eq('part_id', partId);
+
+        // Insert new images with display order
+        if (images.length > 0) {
+          const imageRecords = images.map((url, index) => ({
+            part_id: partId,
+            image_url: url,
+            display_order: index,
+          }));
+          const { error: imgError } = await supabase.from('part_images').insert(imageRecords);
+          if (imgError) throw imgError;
+        }
+      }
+
+      toast({ title: 'Success', description: editingPart ? 'Part updated successfully' : 'Part created successfully' });
       setIsDialogOpen(false);
       resetForm();
       fetchParts();
@@ -321,24 +361,21 @@ const AdminParts = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-8">
-                  <div className="flex items-center gap-2">
-                    <Switch
-                      id="in_stock"
-                      checked={formData.in_stock}
-                      onCheckedChange={(checked) => setFormData({ ...formData, in_stock: checked })}
-                    />
-                    <Label htmlFor="in_stock">In Stock</Label>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Switch
-                      id="fast_delivery"
-                      checked={formData.fast_delivery}
-                      onCheckedChange={(checked) => setFormData({ ...formData, fast_delivery: checked })}
-                    />
-                    <Label htmlFor="fast_delivery">Fast Delivery</Label>
-                  </div>
+                <div className="flex items-center gap-2">
+                  <Switch
+                    id="fast_delivery"
+                    checked={formData.fast_delivery}
+                    onCheckedChange={(checked) => setFormData({ ...formData, fast_delivery: checked })}
+                  />
+                  <Label htmlFor="fast_delivery">Fast Delivery</Label>
                 </div>
+
+                {/* Image Upload */}
+                <PartImageUpload
+                  partId={editingPart?.id}
+                  images={images}
+                  onImagesChange={setImages}
+                />
 
                 <div className="flex justify-end gap-2">
                   <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)}>
@@ -370,6 +407,7 @@ const AdminParts = () => {
           <Table>
             <TableHeader>
               <TableRow>
+                <TableHead>Image</TableHead>
                 <TableHead>Name</TableHead>
                 <TableHead>Part Number</TableHead>
                 <TableHead>Price</TableHead>
@@ -382,19 +420,39 @@ const AdminParts = () => {
             <TableBody>
               {loading ? (
                 <TableRow>
-                  <TableCell colSpan={7} className="text-center py-8">
+                  <TableCell colSpan={8} className="text-center py-8">
                     <Loader2 className="h-6 w-6 animate-spin mx-auto" />
                   </TableCell>
                 </TableRow>
               ) : filteredParts.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
+                  <TableCell colSpan={8} className="text-center py-8 text-muted-foreground">
                     No parts found
                   </TableCell>
                 </TableRow>
               ) : (
                 filteredParts.map((part) => (
                   <TableRow key={part.id}>
+                    <TableCell>
+                      {part.images && part.images.length > 0 ? (
+                        <div className="relative w-12 h-12 rounded overflow-hidden bg-muted">
+                          <img 
+                            src={part.images[0]} 
+                            alt={part.name}
+                            className="w-full h-full object-cover"
+                          />
+                          {part.images.length > 1 && (
+                            <span className="absolute bottom-0 right-0 bg-black/70 text-white text-xs px-1">
+                              +{part.images.length - 1}
+                            </span>
+                          )}
+                        </div>
+                      ) : (
+                        <div className="w-12 h-12 rounded bg-muted flex items-center justify-center">
+                          <ImageIcon className="h-5 w-5 text-muted-foreground" />
+                        </div>
+                      )}
+                    </TableCell>
                     <TableCell className="font-medium">{part.name}</TableCell>
                     <TableCell>{part.part_number || '-'}</TableCell>
                     <TableCell>€{part.price.toFixed(2)}</TableCell>
