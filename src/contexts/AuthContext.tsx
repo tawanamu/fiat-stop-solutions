@@ -139,11 +139,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       setLoading(true);
 
+      const redirectUrl = `${window.location.origin}/auth/callback`;
+
       const { data, error } = await supabase.auth.signUp({
         email: userData.email,
         password: userData.password,
         options: {
-          emailRedirectTo: window.location.origin,
+          emailRedirectTo: redirectUrl,
           data: {
             first_name: userData.firstName,
             last_name: userData.lastName,
@@ -169,6 +171,34 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
         if (profileError) {
           console.error('Error updating profile:', profileError);
+        }
+
+        // Send verification email via edge function
+        try {
+          const confirmationUrl = data.user.confirmation_sent_at 
+            ? redirectUrl 
+            : `${window.location.origin}/auth/callback`;
+            
+          const response = await fetch(
+            `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-verification-email`,
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+              },
+              body: JSON.stringify({
+                email: userData.email,
+                confirmationUrl: redirectUrl,
+              }),
+            }
+          );
+
+          if (!response.ok) {
+            console.error('Failed to send verification email');
+          }
+        } catch (emailError) {
+          console.error('Error sending verification email:', emailError);
         }
       }
 

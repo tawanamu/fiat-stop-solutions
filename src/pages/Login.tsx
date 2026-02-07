@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { CheckCircle } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { Eye, EyeOff, Loader2, Mail, Lock } from 'lucide-react';
@@ -22,6 +23,8 @@ const Login = () => {
   const location = useLocation();
 
   const from = location.state?.from?.pathname || '/';
+  const successMessage = location.state?.message;
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -80,6 +83,15 @@ const Login = () => {
                 </CardHeader>
                 <CardContent>
                   <form onSubmit={handleSubmit} className="space-y-4">
+                    {successMessage && (
+                      <Alert className="border-primary/50 bg-primary/10">
+                        <CheckCircle className="h-4 w-4 text-primary" />
+                        <AlertDescription className="text-primary">
+                          {successMessage}
+                        </AlertDescription>
+                      </Alert>
+                    )}
+                    
                     {error && (
                       <Alert variant="destructive">
                         <AlertDescription>{error}</AlertDescription>
