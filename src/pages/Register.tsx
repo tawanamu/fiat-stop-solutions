@@ -82,7 +82,7 @@ const Register = () => {
     }
 
     try {
-      const success = await register({
+      const result = await register({
         email: formData.email,
         password: formData.password,
         firstName: formData.firstName,
@@ -91,14 +91,14 @@ const Register = () => {
         address: formData.address || undefined
       });
       
-      if (success) {
+      if (result.success) {
         toast({
           title: "Account created successfully!",
-          description: "Welcome to Fiat Stop Solutions. You can now access all features.",
+          description: "Please check your email to verify your account.",
         });
-        navigate('/');
+        navigate('/verify-email', { state: { email: formData.email } });
       } else {
-        setError('Failed to create account. Please try again.');
+        setError(result.error || 'Failed to create account. Please try again.');
       }
     } catch (err) {
       setError('An error occurred during registration. Please try again.');

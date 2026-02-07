@@ -16,12 +16,13 @@ import WorkshopServices from "./pages/WorkshopServices";
 import BookService from "./pages/BookService";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import VerifyEmail from "./pages/VerifyEmail";
+import AuthCallback from "./pages/AuthCallback";
 import Profile from "./pages/Profile";
 import Orders from "./pages/Orders";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "@/components/ScrollToTop";
 import Checkout from "./pages/Checkout";
-
 // Admin pages
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminParts from "./pages/admin/AdminParts";
@@ -53,6 +54,8 @@ const App = () => (
               <Route path="/book-service" element={<BookService />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/verify-email" element={<VerifyEmail />} />
+              <Route path="/auth/callback" element={<AuthCallback />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/orders" element={<Orders />} />
               

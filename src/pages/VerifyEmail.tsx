@@ -34,12 +34,13 @@ const VerifyEmail = () => {
                   </div>
                   <CardTitle className="text-2xl">Check Your Email</CardTitle>
                   <CardDescription>
-                    We've sent a verification link to <strong>{email}</strong>
+                    We've sent a verification link to <strong className="text-foreground">{email}</strong>
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="p-4 bg-muted rounded-md text-sm text-muted-foreground">
                     <p className="mb-2">Please check your inbox and click the verification link to activate your account.</p>
+                    <p className="mb-2">After verifying, you'll be redirected to the login page.</p>
                     <p>If you don't see the email, check your spam folder.</p>
                   </div>
 
